@@ -1,0 +1,297 @@
+@model Karnel_Travel_Guide.Models.Resort
+
+@{
+    ViewData["Title"] = "Resort Details";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Resort Details
+            </h2>
+
+            <p class="text-muted mb-0">
+                View complete resort information
+            </p>
+
+        </div>
+
+        <div>
+
+            <a asp-area="Admin"
+               asp-controller="Resorts"
+               asp-action="Index"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to List
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Details Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0">
+                @Model.Name
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <div class="row g-4">
+
+
+                <!-- Resort ID -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Resort ID
+                        </small>
+
+                        <strong>
+                            @Model.ResortID
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Name -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Name
+                        </small>
+
+                        <strong>
+                            @Model.Name
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- City -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            City
+                        </small>
+
+                        <span>
+                            @Model.City
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Price -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Price Per Night
+                        </small>
+
+                        <strong>
+                            @Model.PricePerNight
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Amenities -->
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Amenities
+                        </small>
+
+                        @if (!string.IsNullOrEmpty(Model.Amenities))
+                        {
+                            <span>
+                                @Model.Amenities
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                N/A
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Rating -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Rating
+                        </small>
+
+                        <span class="badge bg-warning text-dark">
+                            @Model.Rating
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Availability -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Availability
+                        </small>
+
+                        @if (Model.Availability)
+                        {
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Unavailable
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Images -->
+                <div class="col-12">
+                    <div class="border rounded p-3">
+                        <small class="text-muted d-block mb-2">Resort Images</small>
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            var images = Model.ImageUrl.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach (var img in images)
+                                {
+                                    <img src="@img" alt="@Model.Name" class="img-fluid rounded shadow-sm border" style="max-width: 250px; height: 160px; object-fit: cover;" />
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted d-block">No Image Available</span>
+                        }
+                    </div>
+                </div>
+
+
+                <!-- Description -->
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-2">
+                            Description
+                        </small>
+
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            <p class="mb-0">
+                                @Model.Description
+                            </p>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                N/A
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="d-flex flex-wrap gap-2 mt-4">
+
+                <a asp-area="Admin"
+                   asp-controller="Resorts"
+                   asp-action="Edit"
+                   asp-route-resortid="@Model.ResortID"
+                   class="btn btn-warning">
+
+                    <i class="bi bi-pencil me-1"></i>
+                    Edit
+
+                </a>
+
+
+                <a asp-area="Admin"
+                   asp-controller="Resorts"
+                   asp-action="Delete"
+                   asp-route-resortid="@Model.ResortID"
+                   class="btn btn-danger">
+
+                    <i class="bi bi-trash me-1"></i>
+                    Delete
+
+                </a>
+
+
+                <a asp-area="Admin"
+                   asp-controller="Resorts"
+                   asp-action="Index"
+                   class="btn btn-secondary">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to List
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

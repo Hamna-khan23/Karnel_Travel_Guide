@@ -1,0 +1,177 @@
+
+@model Karnel_Travel_Guide.Models.TouristSpot
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">
+                Tourist Spot Details
+            </h2>
+            <p class="text-muted mb-0">
+                View complete tourist spot information
+            </p>
+        </div>
+
+        <div>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- Details Card -->
+    <div class="card shadow-sm border-0">
+        <!-- Card Header -->
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold">
+                @Model.Name
+            </h5>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body p-4">
+            <div class="row">
+
+                <!-- Spot ID -->
+                <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-4 fw-semibold text-muted">Spot ID</dt>
+                        <dd class="col-sm-8">@Model.SpotID</dd>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-4 fw-semibold text-muted">Name</dt>
+                        <dd class="col-sm-8">@Model.Name</dd>
+                    </div>
+                </div>
+
+                <!-- City -->
+                <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-4 fw-semibold text-muted">City</dt>
+                        <dd class="col-sm-8">@Model.City</dd>
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="col-md-6 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-4 fw-semibold text-muted">Category</dt>
+                        <dd class="col-sm-8">
+                            @if (!string.IsNullOrEmpty(Model.Category))
+                            {
+                                <span class="badge bg-primary">@Model.Category</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </dd>
+                    </div>
+                </div>
+                <!-- Price -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Price
+                        </small>
+
+                        <strong>
+                            @Model.PricePerNight
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                <!-- Image Display (Multiple Images Support) -->
+                <div class="col-12 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-2 fw-semibold text-muted">Images</dt>
+                        <dd class="col-sm-10">
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                var images = Model.ImageUrl.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var img in images)
+                                    {
+                                        <img src="@img.Trim()" alt="@Model.Name" class="img-thumbnail" style="max-height: 200px;" />
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </dd>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="col-12 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-2 fw-semibold text-muted">Description</dt>
+                        <dd class="col-sm-10">
+                            @if (!string.IsNullOrEmpty(Model.Description))
+                            {
+                                @Model.Description
+                            }
+                            else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </dd>
+                    </div>
+                </div>
+
+                <!-- Packages -->
+                <div class="col-12 mb-3">
+                    <div class="row">
+                        <dt class="col-sm-2 fw-semibold text-muted">Packages</dt>
+                        <dd class="col-sm-10">
+                            @if (Model.Packages != null && Model.Packages.Any())
+                            {
+                                <span class="badge bg-success">@Model.Packages.Count package(s)</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No packages available</span>
+                            }
+                        </dd>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-4 pt-3 border-top">
+                <a asp-action="Edit" asp-route-id="@Model.SpotID" class="btn btn-warning">
+                    <i class="bi bi-pencil me-1"></i>
+                    Edit
+                </a>
+
+                <a asp-action="Delete" asp-route-id="@Model.SpotID" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i>
+                    Delete
+                </a>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

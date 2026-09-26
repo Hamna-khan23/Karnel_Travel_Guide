@@ -1,0 +1,1303 @@
+﻿@* @model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero-section position-relative py-4 bg-white">
+    <div class="container position-relative py-3">
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-lg-8 py-2 d-flex flex-column align-items-center">
+
+                <span class="badge px-3 py-2 mb-3 text-white rounded-pill shadow-sm" style="background-color: #113264;">
+                    KARNEL TRAVEL GUIDE
+                </span>
+
+                <h1 class="display-4 fw-bold mb-3" style="color: #113264;">
+                    Explore Pakistan With Us
+                </h1>
+
+                <p class="text-muted">
+                    Discover beautiful destinations, comfortable stays,
+                    exciting travel packages and unforgettable experiences
+                    across Pakistan.
+                </p>
+
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a asp-controller="UserTouristSpots"
+                       asp-action="Index"
+                       class="btn btn-lg px-4 text-white rounded-pill shadow-sm"
+                       style="background-color: #113264; border-color: #113264; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600;">
+                        Explore Destinations
+                    </a>
+
+                    <a asp-controller="Information"
+                       asp-action="Index"
+                       class="btn btn-lg px-4 text-white rounded-pill shadow-sm"
+                       style="background-color: #113264; border-color: #113264; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600;">
+                        View Information
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= DISCOVER PAKISTAN ================= -->
+
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                DINE WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Top Restaurants
+            </h2>
+
+            <p class="text-muted">
+                Explore our available restaurants and enjoy your dining experience.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @if (Model != null && Model.Count > 0)
+            {
+                @foreach (var restaurant in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100">
+                            @if (!string.IsNullOrEmpty(restaurant.ImageUrl))
+                            {
+                                var images = restaurant.ImageUrl.Split(',');
+                                var firstImage = images.Length > 0 ? images[0].Trim() : "";
+
+                                if (!string.IsNullOrEmpty(firstImage))
+                                {
+                                    <img src="@firstImage" class="card-img-top" alt="@restaurant.Name">
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/default-restaurant.jpg" class="card-img-top" alt="@restaurant.Name">
+                            }
+
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold" style="color: #113264;">
+                                    @restaurant.Name
+                                </h4>
+
+                                <p class="text-muted">
+                                    @restaurant.Description
+                                </p>
+
+                                <div class="d-flex justify-content-between mb-3">
+                                    @if (!string.IsNullOrEmpty(restaurant.CuisineType))
+                                    {
+                                        <span>
+                                            <i class="bi bi-tag"></i>
+                                            @restaurant.CuisineType
+                                        </span>
+                                    }
+
+                                    @if (restaurant.PriceRange > 0)
+                                    {
+                                        <strong style="color: #113264;">
+                                            Rs. @restaurant.PriceRange.ToString("N0")
+                                        </strong>
+                                    }
+                                </div>
+
+                                @if (!string.IsNullOrEmpty(restaurant.City))
+                                {
+                                    <p class="small text-muted">
+                                        <i class="bi bi-geo-alt"></i>
+                                        @restaurant.City
+                                    </p>
+                                }
+
+                                <a asp-controller="Restaurants"
+                                   asp-action="Details"
+                                   asp-route-id="@restaurant.RestaurantID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm"
+                                   style="background-color: #113264; border-color: #113264;">
+                                    View Restaurant
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center border">
+                        No restaurants are available at the moment.
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= FEATURED PACKAGES ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                TRAVEL WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Travel Packages
+            </h2>
+
+            <p class="text-muted">
+                Explore our available travel packages and choose your next adventure.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @if (Model != null && Model.Count > 0)
+            {
+                @foreach (var package in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100">
+                            @if (!string.IsNullOrEmpty(package.ImageUrl))
+                            {
+                                var images = package.ImageUrl.Split(',');
+                                var firstImage = images.Length > 0 ? images[0].Trim() : "";
+
+                                if (!string.IsNullOrEmpty(firstImage))
+                                {
+                                    <img src="@firstImage" class="card-img-top" alt="@package.Title">
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/default-package.jpg" class="card-img-top" alt="@package.Title">
+                            }
+
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold" style="color: #113264;">
+                                    @package.Title
+                                </h4>
+
+                                <p class="text-muted">
+                                    @package.Description
+                                </p>
+
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span>
+                                        <i class="bi bi-calendar3"></i>
+                                        @package.Duration Days
+                                    </span>
+
+                                    <strong style="color: #113264;">
+                                        Rs. @package.Price.ToString("N0")
+                                    </strong>
+                                </div>
+
+                                @if (package.TouristSpot != null)
+                                {
+                                    <p class="small text-muted">
+                                        <i class="bi bi-geo-alt"></i>
+                                        @package.TouristSpot.City
+                                    </p>
+                                }
+
+                                <a asp-controller="Packages"
+                                   asp-action="Details"
+                                   asp-route-id="@package.PackageID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm"
+                                   style="background-color: #113264; border-color: #113264;">
+                                    View Package
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center border">
+                        No packages are available at the moment.
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= HOTELS & RESORTS ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                STAY WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Featured Resorts
+            </h2>
+
+            <p class="text-muted">
+                Experience world-class comfort and luxury during your stay.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @if (Model.Resorts != null && Model.Resorts.Count > 0)
+            {
+                @foreach (var resort in Model.Resorts.Take(3))
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100">
+                            @if (!string.IsNullOrEmpty(resort.ImageUrl))
+                            {
+                                var images = resort.ImageUrl.Split(',');
+                                var firstImage = images.Length > 0 ? images[0].Trim() : "";
+
+                                if (!string.IsNullOrEmpty(firstImage))
+                                {
+                                    <img src="@firstImage" class="card-img-top" alt="@resort.Name" style="height: 220px; object-fit: cover;">
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/default-resort.jpg" class="card-img-top" alt="@resort.Name" style="height: 220px; object-fit: cover;">
+                            }
+
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold" style="color: #113264;">
+                                    @resort.Name
+                                </h4>
+
+                                <p class="text-muted">
+                                    @resort.Description
+                                </p>
+
+                                <div class="d-flex justify-content-between mb-3">
+                                    @if (!string.IsNullOrEmpty(resort.Location))
+                                    {
+                                        <span class="small text-muted">
+                                            <i class="bi bi-geo-alt"></i>
+                                            @resort.Location
+                                        </span>
+                                    }
+
+                                    <strong style="color: #113264;">
+                                        Rs. @resort.PricePerNight.ToString("N0") / Night
+                                    </strong>
+                                </div>
+
+                                <a asp-controller="Resorts"
+                                   asp-action="Details"
+                                   asp-route-id="@resort.ResortID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm"
+                                   style="background-color: #113264; border-color: #113264;">
+                                    View Resort
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center border">
+                        No resorts are available at the moment.
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                WHY US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Why Choose Karnel Travel Guide?
+            </h2>
+
+            <p class="text-muted">
+                Everything you need for a better travel experience.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-map"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Explore Destinations</h5>
+                    <p class="text-muted">Discover beautiful places across Pakistan.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Comfortable Stays</h5>
+                    <p class="text-muted">Find hotels and resorts suitable for your trip.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-backpack"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Travel Packages</h5>
+                    <p class="text-muted">Choose travel packages according to your needs.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-star"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Trusted Information</h5>
+                    <p class="text-muted">Get useful information for planning your journey.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= CUSTOMER REVIEWS ================= -->
+<section class="py-4 bg-light">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                TESTIMONIALS
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                What Our Travelers Say
+            </h2>
+
+            <p class="text-muted">
+                Experiences shared by our travelers.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="text-warning mb-3">★★★★★</div>
+                        <p class="text-muted">"The travel information was very helpful and made planning our trip much easier."</p>
+                        <h6 class="fw-bold mb-0" style="color: #113264;">Happy Traveler</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="text-warning mb-3">★★★★★</div>
+                        <p class="text-muted">"The package details were clear and easy to understand. We enjoyed our journey."</p>
+                        <h6 class="fw-bold mb-0" style="color: #113264;">Happy Traveler</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="text-warning mb-3">★★★★★</div>
+                        <p class="text-muted">"Karnel Travel Guide helped us discover some amazing places in Pakistan."</p>
+                        <h6 class="fw-bold mb-0" style="color: #113264;">Happy Traveler</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= SPECIAL OFFERS ================= -->
+<section class="py-4">
+    <div class="container">
+        <div class="offer-section rounded-4 p-4 text-white" style="background-color: #113264;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-light text-dark mb-3 px-3 py-2 rounded-pill">
+                        SPECIAL OFFERS
+                    </span>
+                    <h2 class="fw-bold text-white">Plan Your Next Adventure</h2>
+                    <p class="mb-0 text-light">
+                        Explore our latest travel offers and discover amazing packages for your next trip.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                    <a asp-controller="Home"
+                       asp-action="Information"
+                       class="btn btn-lg px-4 text-white rounded-pill shadow-sm"
+                       style="background-color: #ffffff; color: #113264 !important; font-weight: 600;">
+                        View Offers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="py-4">
+    <div class="container text-center">
+        <h2 class="fw-bold" style="color: #113264;">
+            Ready to Explore Pakistan?
+        </h2>
+        <p class="text-muted mb-3">
+            Start planning your next unforgettable journey with Karnel Travel Guide.
+        </p>
+        <a asp-controller="Home"
+           asp-action="Information"
+           class="btn btn-lg px-5 text-white rounded-pill shadow-sm"
+           style="background-color: #113264; border-color: #113264;">
+            Start Exploring
+        </a>
+    </div>
+</section>
+
+<!-- ================= CUSTOM CSS ================= -->
+<style>
+    .destination-card,
+    .package-card {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+        .destination-card:hover,
+        .package-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .destination-card img,
+        .package-card img,
+        .card img {
+            height: 230px;
+            object-fit: cover;
+        }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #113264;
+        color: white;
+        font-size: 26px;
+    }
+</style> *@
+
+
+@model List<Karnel_Travel_Guide.Models.Package>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- ================= HERO SECTION ================= -->
+
+<section class="hero-section position-relative py-4 bg-white">
+    <div class="container position-relative py-3">
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-lg-8 py-2 d-flex flex-column align-items-center">
+
+                <span class="badge px-3 py-2 mb-3 text-white rounded-pill shadow-sm" style="background-color: #113264;">
+                    KARNEL TRAVEL GUIDE
+                </span>
+
+                <h1 class="display-4 fw-bold mb-3" style="color: #113264;">
+                    Explore Pakistan With Us
+                </h1>
+
+                <p class="text-muted">
+                    Discover beautiful destinations, comfortable stays,
+                    exciting travel packages and unforgettable experiences
+                    across Pakistan.
+                </p>
+
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a asp-controller="UserTouristSpots"
+                       asp-action="Index"
+                       class="btn btn-lg px-4 text-white rounded-pill shadow-sm"
+                       style="background-color: #113264; border-color: #113264; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600;">
+                        Explore Destinations
+                    </a>
+
+                    <a asp-controller="Information"
+                       asp-action="Index"
+                       class="btn btn-lg px-4 text-white rounded-pill shadow-sm"
+                       style="background-color: #113264; border-color: #113264; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px; font-weight: 600;">
+                        View Information
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ================= FEATURED PACKAGES ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                TRAVEL WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Travel Packages
+            </h2>
+
+            <p class="text-muted">
+                Explore our available travel packages and choose your next adventure.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @if (Model != null && Model.Count > 0)
+            {
+                @foreach (var package in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100">
+                            @if (!string.IsNullOrEmpty(package.ImageUrl))
+                            {
+                                var images = package.ImageUrl.Split(',');
+                                var firstImage = images.Length > 0 ? images[0].Trim() : "";
+
+                                if (!string.IsNullOrEmpty(firstImage))
+                                {
+                                    <img src="@firstImage" class="card-img-top" alt="@package.Title">
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/default-package.jpg" class="card-img-top" alt="@package.Title">
+                            }
+
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold" style="color: #113264;">
+                                    @package.Title
+                                </h4>
+
+                                <p class="text-muted">
+                                    @package.Description
+                                </p>
+
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span>
+                                        <i class="bi bi-calendar3"></i>
+                                        @package.Duration Days
+                                    </span>
+
+                                    <strong style="color: #113264;">
+                                        Rs. @package.Price.ToString("N0")
+                                    </strong>
+                                </div>
+
+                                @if (package.TouristSpot != null)
+                                {
+                                    <p class="small text-muted">
+                                        <i class="bi bi-geo-alt"></i>
+                                        @package.TouristSpot.City
+                                    </p>
+                                }
+
+                                <a asp-controller="Packages"
+                                   asp-action="Details"
+                                   asp-route-id="@package.PackageID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm"
+                                   style="background-color: #113264; border-color: #113264;">
+                                    View Package
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center border">
+                        No packages are available at the moment.
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+<!-- ================= FEATURED TRAVEL & TRANSPORTATION ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                MOVE WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Travel & Transportation
+            </h2>
+
+            <p class="text-muted">
+                Choose reliable bus, train, and flight options across Pakistan.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @if (ViewBag.Travels != null && ViewBag.Travels.Count > 0)
+            {
+                @foreach (var travel in ViewBag.Travels)
+                {
+                    string transportIcon = "bi-bus-front";
+                    string iconBg = "#e8f1fd";
+                    string iconColor = "#113264";
+
+                    if (!string.IsNullOrEmpty(travel.TransportType))
+                    {
+                        var type = travel.TransportType.ToLower();
+                        if (type.Contains("flight") || type.Contains("air") || type.Contains("plane"))
+                        {
+                            transportIcon = "bi-airplane";
+                        }
+                        else if (type.Contains("train") || type.Contains("rail"))
+                        {
+                            transportIcon = "bi-train-front";
+                        }
+                        else if (type.Contains("car") || type.Contains("van") || type.Contains("taxi"))
+                        {
+                            transportIcon = "bi-car-front";
+                        }
+                    }
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+
+                            <!-- CARD HEADER WITH ICON & TRANSPORT TYPE -->
+                            <div class="p-4 pb-3" style="background: linear-gradient(135deg, #113264, #1b4b91); color: white;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center"
+                                             style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); font-size: 22px;">
+                                            <i class="bi @transportIcon"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold mb-0 text-white">@travel.TransportType</h5>
+                                            <small class="text-light opacity-75">Scheduled Transport</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-light text-dark rounded-pill px-3 py-2 fw-semibold">
+                                        Rs. @travel.Price.ToString("N0")
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- CARD BODY -->
+                            <div class="card-body p-4 d-flex flex-column">
+
+                                <!-- ROUTE CITIES -->
+                                <div class="p-3 bg-light rounded-3 mb-3 border">
+                                    <div class="d-flex justify-content-between align-items-center text-center">
+                                        <div>
+                                            <small class="text-muted d-block">From</small>
+                                            <strong class="fs-6" style="color: #113264;">@travel.FromCity</strong>
+                                        </div>
+                                        <div>
+                                            <i class="bi bi-arrow-right text-primary fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <small class="text-muted d-block">To</small>
+                                            <strong class="fs-6" style="color: #113264;">@travel.ToCity</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ROUTE VIA -->
+                                @if (!string.IsNullOrEmpty(travel.Route))
+                                {
+                                    <p class="small text-muted mb-2">
+                                        <i class="bi bi-signpost-split me-1 text-primary"></i> <strong>Route:</strong> @travel.Route
+                                    </p>
+                                }
+
+                                <!-- TIMINGS -->
+                                <div class="row g-2 mb-3 small text-muted">
+                                    <div class="col-6">
+                                        <i class="bi bi-clock me-1 text-primary"></i> Dep: <strong>@DateTime.Today.Add(travel.DepartureTime).ToString("hh:mm tt")</strong>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <i class="bi bi-clock-history me-1 text-primary"></i> Arr: <strong>@DateTime.Today.Add(travel.ArrivalTime).ToString("hh:mm tt")</strong>
+                                    </div>
+                                </div>
+
+                                <!-- DESCRIPTION -->
+                                @if (!string.IsNullOrEmpty(travel.Description))
+                                {
+                                    <p class="text-muted small mb-4 flex-grow-1">
+                                        @travel.Description
+                                    </p>
+                                }
+                                else
+                                {
+                                    <div class="flex-grow-1"></div>
+                                }
+
+                                <!-- BOOK NOW BUTTON -->
+                                <a asp-controller="Bookings"
+                                   asp-action="BookTravel"
+                                   asp-route-id="@travel.TravelID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm mt-auto"
+                                   style="background-color: #113264; border-color: #113264; font-weight: 600;">
+                                    <i class="bi bi-ticket-perforated me-1"></i> Book Transport
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center border">
+                        No transportation options are available at the moment.
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= FEATURED RESORTS ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                STAY WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Featured Resorts
+            </h2>
+
+            <p class="text-muted">
+                Experience world-class comfort and luxury during your stay.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            @if (ViewBag.Resorts != null && ViewBag.Resorts.Count > 0)
+            {
+                @foreach (var resort in ViewBag.Resorts)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100">
+                            @if (!string.IsNullOrEmpty(resort.ImageUrl))
+                            {
+                                var images = ((string)resort.ImageUrl).Split(',');
+                                var firstImage = images.Length > 0 ? images[0].Trim() : "";
+
+                                if (!string.IsNullOrEmpty(firstImage))
+                                {
+                                    <img src="@firstImage" class="card-img-top" alt="@resort.Name" style="height: 220px; object-fit: cover;">
+                                }
+                            }
+                            else
+                            {
+                                <img src="~/images/default-resort.jpg" class="card-img-top" alt="@resort.Name" style="height: 220px; object-fit: cover;">
+                            }
+
+                            <div class="card-body p-4">
+                                <h4 class="fw-bold" style="color: #113264;">
+                                    @resort.Name
+                                </h4>
+
+                                <p class="text-muted">
+                                    @resort.Description
+                                </p>
+
+                                <div class="d-flex justify-content-between mb-3">
+                                    @if (!string.IsNullOrEmpty(resort.City))
+                                    {
+                                        <span class="small text-muted">
+                                            <i class="bi bi-geo-alt"></i>
+                                            @resort.City
+                                        </span>
+                                    }
+
+                                    <strong style="color: #113264;">
+                                        Rs. @resort.PricePerNight.ToString("N0") / Night
+                                    </strong>
+                                </div>
+
+                                <a asp-controller="Resorts"
+                                   asp-action="Details"
+                                   asp-route-id="@resort.ResortID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm"
+                                   style="background-color: #113264; border-color: #113264;">
+                                    View Resort
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-light text-center border">
+                        No resorts are available at the moment.
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section class="py-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                WHY US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Why Choose Karnel Travel Guide?
+            </h2>
+
+            <p class="text-muted">
+                Everything you need for a better travel experience.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-map"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Explore Destinations</h5>
+                    <p class="text-muted">Discover beautiful places across Pakistan.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Comfortable Stays</h5>
+                    <p class="text-muted">Find hotels and resorts suitable for your trip.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-map"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Travel Packages</h5>
+                    <p class="text-muted">Choose travel packages according to your needs.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center p-3">
+                    <div class="feature-icon mx-auto mb-3">
+                        <i class="bi bi-star"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color: #113264;">Trusted Information</h5>
+                    <p class="text-muted">Get useful information for planning your journey.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ================= CUSTOMER REVIEWS ================= -->
+
+<section class="py-4 bg-light">
+    <div class="container">
+
+        
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                TESTIMONIALS
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                What Our Travelers Say
+            </h2>
+
+            <p class="text-muted">
+                Experiences shared by our travelers.
+            </p>
+        </div>
+
+
+        <!-- Feedback Carousel -->
+        <div id="feedbackCarousel"
+             class="carousel slide"
+             data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+
+                    <div class="row g-4">
+
+                        <!-- Feedback 1 -->
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+
+                                    <div class="text-warning mb-3">
+                                        ★★★★★
+                                    </div>
+
+                                    <p class="text-muted">
+                                        "The travel information was very helpful
+                                        and made planning our trip much easier."
+                                    </p>
+
+                                    <h6 class="fw-bold mb-0"
+                                        style="color: #113264;">
+                                        Fawad Khan
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Feedback 2 -->
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+
+                                    <div class="text-warning mb-3">
+                                        ★★★★☆
+                                    </div>
+
+                                    <p class="text-muted">
+                                        "The package details were clear and easy
+                                        to understand. We enjoyed our journey."
+                                    </p>
+
+                                    <h6 class="fw-bold mb-0"
+                                        style="color: #113264;">
+                                        Bilal Abbas
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Feedback 3 -->
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+
+                                    <div class="text-warning mb-3">
+                                        ★★★★★
+                                    </div>
+
+                                    <p class="text-muted">
+                                        "Karnel Travel Guide helped us discover
+                                        some amazing places in Pakistan."
+                                    </p>
+
+                                    <h6 class="fw-bold mb-0"
+                                        style="color: #113264;">
+                                        Sajal Ali
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+
+                    <div class="row g-4">
+
+                        <!-- Feedback 4 -->
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+
+                                    <div class="text-warning mb-3">
+                                        ★★★★☆
+                                    </div>
+
+                                    <p class="text-muted">
+                                        "Everything was well organized and the
+                                        trip was a wonderful experience."
+                                    </p>
+
+                                    <h6 class="fw-bold mb-0"
+                                        style="color: #113264;">
+                                        Ahmed Ali
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Feedback 5 -->
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+
+                                    <div class="text-warning mb-3">
+                                        ★★★★★
+                                    </div>
+
+                                    <p class="text-muted">
+                                        "A great travel guide for exploring
+                                        beautiful destinations in Pakistan."
+                                    </p>
+
+                                    <h6 class="fw-bold mb-0"
+                                        style="color: #113264;">
+                                        Ayesha Khan
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Feedback 6 -->
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body p-4">
+
+                                    <div class="text-warning mb-3">
+                                        ★★★★★
+                                    </div>
+
+                                    <p class="text-muted">
+                                        "The information was useful and helped
+                                        us plan our vacation with confidence."
+                                    </p>
+
+                                    <h6 class="fw-bold mb-0"
+                                        style="color: #113264;">
+                                        Hamza Ahmed
+                                    </h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LEFT ARROW -->
+            <button class="carousel-control-prev feedback-arrow"
+                    type="button"
+                    data-bs-target="#feedbackCarousel"
+                    data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon"></span>
+
+                <span class="visually-hidden">
+                    Previous
+                </span>
+
+            </button>
+
+
+            <!-- RIGHT ARROW -->
+            <button class="carousel-control-next feedback-arrow"
+                    type="button"
+                    data-bs-target="#feedbackCarousel"
+                    data-bs-slide="next">
+
+                <span class="carousel-control-next-icon"></span>
+
+                <span class="visually-hidden">
+                    Next
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+    
+
+</section>
+
+<style>
+
+    #feedbackCarousel {
+        padding: 0 55px;
+    }
+
+    .feedback-arrow {
+        width: 45px;
+        height: 45px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #113264;
+        border-radius: 50%;
+        opacity: 1;
+    }
+
+    .carousel-control-prev {
+        left: 0;
+    }
+
+    .carousel-control-next {
+        right: 0;
+    }
+
+    .feedback-arrow:hover {
+        background-color: #5DADE2;
+    }
+
+    #feedbackCarousel .card {
+        transition: transform 0.3s ease;
+    }
+
+        #feedbackCarousel .card:hover {
+            transform: translateY(-5px);
+        }
+
+</style>
+
+
+
+<!-- ================= SPECIAL OFFERS ================= -->
+
+<section class="py-4" style="margin-top:20px;">
+    <div class="container">
+        <div class="offer-section rounded-4 p-4 text-white" style="background-color: #113264; border-radius: 12px !important;">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-light text-dark mb-3 px-3 py-2 rounded-pill">
+                        SPECIAL OFFERS
+                    </span>
+                    <h2 class="fw-bold text-white">Plan Your Next Adventure</h2>
+                    <p class="mb-0 text-light">
+                        Explore our latest travel offers and discover amazing packages for your next trip.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                    <a asp-controller="Packages"
+                       asp-action="Index"
+                       class="btn btn-lg px-4 text-white rounded-pill shadow-sm"
+                       style="background-color: #ffffff; color: #113264 !important; font-weight: 600;">
+                        View Offers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="py-4">
+    <div class="container text-center">
+        <h2 class="fw-bold" style="color: #113264;">
+            Ready to Explore Pakistan?
+        </h2>
+        <p class="text-muted mb-3">
+            Start planning your next unforgettable journey with Karnel Travel Guide.
+        </p>
+        <a asp-controller="UserTouristSpots"
+           asp-action="Index"
+           class="btn btn-lg px-5 text-white rounded-pill shadow-sm"
+           style="background-color: #113264; border-color: #113264;">
+            Start Exploring
+        </a>
+    </div>
+</section>
+
+<!-- ================= CUSTOM CSS ================= -->
+<style>
+    .destination-card,
+    .package-card {
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+        .destination-card:hover,
+        .package-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .destination-card img,
+        .package-card img,
+        .card img {
+            height: 230px;
+            object-fit: cover;
+        }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #113264;
+        color: white;
+        font-size: 26px;
+    }
+</style>

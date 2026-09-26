@@ -1,0 +1,505 @@
+@* @model IEnumerable<Karnel_Travel_Guide.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">Restaurants</h2>
+
+            <p class="text-muted mb-0">
+                Manage restaurants
+            </p>
+        </div>
+
+        <div>
+            <a asp-action="Create"
+               class="btn btn-success rounded-3 px-3">
+
+                <i class="bi bi-plus-circle me-1"></i>
+                Create Restaurant
+
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- Restaurants Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-0 fw-bold">
+                All Restaurants
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Cuisine</th>
+                                <th>Price Range</th>
+                                <th>Rating</th>
+                                <th>City</th>
+                                <th>Availability</th>
+                                <th>Description</th>
+                                <th>Image</th>
+
+                                <th class="text-center">
+                                    Actions
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var restaurant in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <strong>
+                                            @restaurant.Name
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        @restaurant.Cuisine
+                                    </td>
+
+                                    <td>
+                                        @restaurant.PriceRange
+                                    </td>
+
+                                    <td>
+                                        <span class="badge bg-warning text-dark">
+                                            @restaurant.Rating
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @restaurant.City
+                                    </td>
+
+                                    <td>
+                                        @if (restaurant.Availability)
+                                        {
+                                            <span class="badge bg-success">
+                                                Available
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                Not Available
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @restaurant.Description
+                                    </td>
+
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(restaurant.ImageUrl))
+                                        {
+                                            <img src="@restaurant.ImageUrl"
+                                                 alt="@restaurant.Name"
+                                                 class="img-thumbnail"
+                                                 style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted small">No Image</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <div class="d-flex justify-content-center align-items-center gap-2 flex-nowrap">
+
+                                            <!-- Details -->
+                                            <a class="btn btn-sm btn-info text-white rounded-3 px-3"
+                                               asp-area="Admin"
+                                               asp-controller="Restaurants"
+                                               asp-action="Details"
+                                               asp-route-restaurantid="@restaurant.RestaurantID">
+
+                                                <i class="bi bi-eye me-1"></i>
+                                                Details
+
+                                            </a>
+
+                                            <!-- Edit -->
+                                            <a class="btn btn-sm btn-warning rounded-3 px-3"
+                                               asp-area="Admin"
+                                               asp-controller="Restaurants"
+                                               asp-action="Edit"
+                                               asp-route-restaurantid="@restaurant.RestaurantID">
+
+                                                <i class="bi bi-pencil me-1"></i>
+                                                Edit
+
+                                            </a>
+
+                                            <!-- Delete -->
+                                            <a class="btn btn-sm btn-danger rounded-3 px-3"
+                                               asp-area="Admin"
+                                               asp-controller="Restaurants"
+                                               asp-action="Delete"
+                                               asp-route-restaurantid="@restaurant.RestaurantID">
+
+                                                <i class="bi bi-trash me-1"></i>
+                                                Delete
+
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+
+                    <i class="bi bi-shop fs-1 text-muted"></i>
+
+                    <h5 class="mt-3">
+                        No restaurants found
+                    </h5>
+
+                    <p class="text-muted">
+                        There are currently no restaurants available.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div> *@
+@model IEnumerable<Karnel_Travel_Guide.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<style>
+    /* Table Layout & Custom Widths */
+    .restaurant-table {
+        min-width: 1100px;
+        font-size: 13px;
+    }
+
+        .restaurant-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+    /* Column Sizing */
+    .col-id {
+        width: 60px;
+    }
+
+    .col-name {
+        min-width: 140px;
+    }
+
+    .col-cuisine {
+        min-width: 110px;
+    }
+
+    .col-price {
+        min-width: 110px;
+    }
+
+    .col-rating {
+        min-width: 90px;
+    }
+
+    .col-city {
+        min-width: 110px;
+    }
+
+    .col-avail {
+        min-width: 110px;
+    }
+
+    .col-desc {
+        min-width: 200px;
+        max-width: 260px;
+    }
+
+    .col-img {
+        min-width: 100px;
+    }
+
+    .col-actions {
+        width: 220px;
+        min-width: 220px;
+    }
+
+    /* Custom Scrollbar for Smooth UX */
+    .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+    }
+
+    /* DETAILS BUTTON */
+    .restaurant-details-btn {
+        background-color: #0dcaf0 !important;
+        border-color: #0dcaf0 !important;
+        color: #ffffff !important;
+    }
+
+        .restaurant-details-btn:hover {
+            background-color: #0aa2c0 !important;
+            border-color: #0aa2c0 !important;
+            color: #ffffff !important;
+        }
+
+    /* EDIT BUTTON */
+    .restaurant-edit-btn {
+        background-color: #ffc107 !important;
+        border-color: #ffc107 !important;
+        color: #000000 !important;
+    }
+
+        .restaurant-edit-btn:hover {
+            background-color: #e0a800 !important;
+            border-color: #e0a800 !important;
+            color: #000000 !important;
+        }
+
+    /* DELETE BUTTON */
+    .restaurant-delete-btn {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+        color: #ffffff !important;
+    }
+
+        .restaurant-delete-btn:hover {
+            background-color: #bb2d3b !important;
+            border-color: #bb2d3b !important;
+            color: #ffffff !important;
+        }
+</style>
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Restaurants</h2>
+            <p class="text-secondary mb-0 small">Manage restaurants and dining places</p>
+        </div>
+
+        <div>
+            <a asp-area="Admin"
+               asp-controller="Restaurants"
+               asp-action="Create"
+               class="btn btn-success fw-semibold shadow-sm px-3">
+                <i class="bi bi-plus-circle me-1"></i> Create Restaurant
+            </a>
+        </div>
+    </div>
+
+    <!-- RESTAURANTS CARD TABLE -->
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle restaurant-table text-center mb-0">
+                    <thead class="table-light text-secondary border-bottom">
+                        <tr>
+                            <th class="col-id py-3">ID</th>
+                            <th class="col-name py-3 text-start">Name</th>
+                            <th class="col-cuisine py-3">Cuisine</th>
+                            <th class="col-price py-3">Price Range</th>
+                            <th class="col-rating py-3">Rating</th>
+                            <th class="col-city py-3">City</th>
+                            <th class="col-avail py-3">Availability</th>
+                            <th class="col-desc py-3 text-start">Description</th>
+                            <th class="col-img py-3">Image</th>
+                            <th class="col-actions py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                var images = !string.IsNullOrEmpty(item.ImageUrl)
+                                    ? item.ImageUrl.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                    : Array.Empty<string>();
+
+                                <tr>
+                                    <!-- ID -->
+                                    <td class="col-id fw-bold text-secondary">
+                                        #@item.RestaurantID
+                                    </td>
+
+                                    <!-- NAME -->
+                                    <td class="col-name text-start fw-semibold text-dark">
+                                        @item.Name
+                                    </td>
+
+                                    <!-- CUISINE -->
+                                    <td class="col-cuisine text-nowrap">
+                                        @item.Cuisine
+                                    </td>
+
+                                    <!-- PRICE RANGE -->
+                                    <td class="col-price text-nowrap">
+                                        @item.PriceRange
+                                    </td>
+
+                                    <!-- RATING -->
+                                    <td class="col-rating text-nowrap">
+                                        <span class="badge bg-warning text-dark px-2 py-1">
+                                            <i class="bi bi-star-fill me-1"></i>@item.Rating
+                                        </span>
+                                    </td>
+
+                                    <!-- CITY -->
+                                    <td class="col-city text-nowrap">
+                                        @item.City
+                                    </td>
+
+                                    <!-- AVAILABILITY -->
+                                    <td class="col-avail text-nowrap">
+                                        @if (item.Availability)
+                                        {
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                                                Available
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">
+                                                Unavailable
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <!-- DESCRIPTION -->
+                                    <td class="col-desc text-start text-muted text-truncate" style="max-width: 250px;">
+                                        @if (!string.IsNullOrEmpty(item.Description))
+                                        {
+                                            <span title="@item.Description">@item.Description</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fst-italic text-black-50">N/A</span>
+                                        }
+                                    </td>
+
+                                    <!-- IMAGE -->
+                                    <td class="col-img">
+                                        <div class="position-relative d-inline-block">
+                                            @if (images.Length > 0)
+                                            {
+                                                <img src="@Url.Content(images[0].Trim())" alt="@item.Name" class="rounded border object-fit-cover" style="width: 50px; height: 50px;" />
+
+                                                @if (images.Length > 1)
+                                                {
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.65rem;">
+                                                        +@(images.Length - 1)
+                                                    </span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="bg-light border rounded d-flex align-items-center justify-content-center text-muted mx-auto" style="width: 50px; height: 50px; font-size: 0.75rem;">
+                                                    No Img
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+
+                                    <!-- ACTIONS -->
+                                    <td class="col-actions text-nowrap">
+                                        <div class="d-inline-flex gap-1">
+                                            <!-- DETAILS -->
+                                            <a asp-area="Admin"
+                                               asp-controller="Restaurants"
+                                               asp-action="Details"
+                                               asp-route-restaurantid="@item.RestaurantID"
+                                               class="btn restaurant-details-btn btn-sm"
+                                               title="View Details">
+                                                <i class="bi bi-eye me-1"></i>
+                                                <span>Details</span>
+                                            </a>
+
+                                            <!-- EDIT -->
+                                            <a asp-area="Admin"
+                                               asp-controller="Restaurants"
+                                               asp-action="Edit"
+                                               asp-route-restaurantid="@item.RestaurantID"
+                                               class="btn restaurant-edit-btn btn-sm"
+                                               title="Edit Restaurant">
+                                                <i class="bi bi-pencil me-1"></i>
+                                                <span>Edit</span>
+                                            </a>
+
+                                            <!-- DELETE -->
+                                            <a asp-area="Admin"
+                                               asp-controller="Restaurants"
+                                               asp-action="Delete"
+                                               asp-route-restaurantid="@item.RestaurantID"
+                                               class="btn restaurant-delete-btn btn-sm"
+                                               title="Delete Restaurant">
+                                                <i class="bi bi-trash me-1"></i>
+                                                <span>Delete</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="10" class="py-4 text-center text-muted">
+                                    <i class="bi bi-shop fs-3 d-block mb-2"></i>
+                                    No restaurants found. Click <strong>Create Restaurant</strong> to add one.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

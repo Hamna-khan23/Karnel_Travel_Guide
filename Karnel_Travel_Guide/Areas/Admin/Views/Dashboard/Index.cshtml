@@ -1,0 +1,545 @@
+﻿@model Karnel_Travel_Guide.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<main class="dashboard-content">
+
+    <div class="container-fluid px-3 px-lg-4 py-4">
+
+        <!-- ================================================= -->
+        <!-- PAGE HEADER -->
+        <!-- ================================================= -->
+
+        <div class="page-heading mb-4">
+
+            <div class="page-heading-copy">
+
+                <span class="page-icon">
+                    <i class="bi bi-speedometer2" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <p class="eyebrow mb-1">
+                        Overview
+                    </p>
+
+                    <h1 class="h3 mb-1">
+                        Dashboard
+                    </h1>
+
+                    <p class="text-muted mb-0">
+                        Overview of the website.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- DASHBOARD STATISTICS -->
+        <!-- ================================================= -->
+
+        <section class="row g-3" aria-label="Dashboard statistics">
+
+
+            <!-- ================= USERS ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-primary">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Users
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-people" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalUsers
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Registered users
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= HOTELS ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-success">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Hotels
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-building" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalHotels
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Hotel records
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= TOURIST SPOTS ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-warning">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Tourist Spots
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalTouristSpots
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Tourist destinations
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RESORTS ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-danger">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Resorts
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-house-heart" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalResorts
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Resort records
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RESTAURANTS ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-primary">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Restaurants
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-shop" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalRestaurants
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Restaurant records
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= TRAVEL INFORMATION ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-success">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Travel Information
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-bus-front" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalTravelInformation
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Travel routes
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= PACKAGES ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-warning">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Packages
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-box" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalPackages
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Travel packages
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BOOKINGS ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-danger">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Bookings
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-calendar-check" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalBookings
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Customer bookings
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= FEEDBACK ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-primary">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Total Feedback
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-chat-square-text" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalFeedback
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Customer feedback
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= CONTACT MESSAGES ================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="metric-card metric-success">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            Contact Messages
+                        </span>
+
+                        <span class="metric-icon">
+                            <i class="bi bi-envelope" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+
+                    <div class="metric-value">
+                        @Model.TotalContactMessages
+                    </div>
+
+                    <div class="metric-meta">
+
+                        <span>
+                            Customer messages
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- QUICK ACCESS -->
+        <!-- ================================================= -->
+
+        <section class="row g-3 mt-3">
+
+
+            <!-- ================= BOOKINGS ================= -->
+
+            <div class="col-12 col-md-4">
+
+                <div class="panel h-100">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2 class="h5 mb-1 section-title">
+
+                                <i class="bi bi-calendar-check"
+                                   aria-hidden="true"></i>
+
+                                <span>
+                                    Bookings
+                                </span>
+
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Manage customer bookings.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-area="Admin"
+                       asp-controller="Bookings"
+                       asp-action="Index"
+                       class="btn btn-primary btn-sm">
+
+                        View Bookings
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= USERS ================= -->
+
+            <div class="col-12 col-md-4">
+
+                <div class="panel h-100">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2 class="h5 mb-1 section-title">
+
+                                <i class="bi bi-people"
+                                   aria-hidden="true"></i>
+
+                                <span>
+                                    Users
+                                </span>
+
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Manage registered users.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-area="Admin"
+                       asp-controller="Users"
+                       asp-action="Index"
+                       class="btn btn-primary btn-sm">
+
+                        View Users
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= PACKAGES ================= -->
+
+            <div class="col-12 col-md-4">
+
+                <div class="panel h-100">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <h2 class="h5 mb-1 section-title">
+
+                                <i class="bi bi-box"
+                                   aria-hidden="true"></i>
+
+                                <span>
+                                    Packages
+                                </span>
+
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Manage travel packages.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <a asp-area="Admin"
+                       asp-controller="Packages"
+                       asp-action="Index"
+                       class="btn btn-primary btn-sm">
+
+                        View Packages
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+</main>

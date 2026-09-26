@@ -1,0 +1,156 @@
+﻿@model IEnumerable<Karnel_Travel_Guide.Models.Booking>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<div class="container py-5" style="margin-top: 70px;">
+    <h2 class="fw-bold mb-4">My Bookings History</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center py-4">
+            <h4>You haven't made any bookings yet!</h4>
+            <p class="text-muted">
+                Explore our hotels, resorts, packages, and travel guides to book your next trip.
+            </p>
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-primary rounded-pill mt-2">
+                Explore Services
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover align-middle bg-white mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Category / Service Name</th>
+                        <th>Date</th>
+                        <th>Persons</th>
+                        <th>Amount / Price Range</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        string serviceName = "General Booking";
+                        string category = "Other";
+
+                        if (item.HotelID != null && item.Hotel != null)
+                        {
+                            serviceName = item.Hotel.Name;
+                            category = "Hotel";
+                        }
+                        else if (item.ResortID != null && item.Resort != null)
+                        {
+                            serviceName = item.Resort.Name;
+                            category = "Resort";
+                        }
+                        else if (item.PackageID != null && item.Package != null)
+                        {
+                            serviceName = item.Package.Title;
+                            category = "Package";
+                        }
+                        else if (item.TravelID != null && item.TravelInformation != null)
+                        {
+                            serviceName =
+                                $"{item.TravelInformation.TransportType}: " +
+                                $"{item.TravelInformation.FromCity} to " +
+                                $"{item.TravelInformation.ToCity}";
+
+                            category = "Transport";
+                        }
+                        else if (item.TouristSpotID != null && item.TouristSpot != null)
+                        {
+                            serviceName = item.TouristSpot.Name;
+                            category = "Tourist Spot";
+                        }
+                        else if (item.RestaurantID != null && item.Restaurant != null)
+                        {
+                            serviceName = item.Restaurant.Name;
+                            category = "Restaurant";
+                        }
+
+                        <tr>
+                            <td class="fw-bold">
+                                #@item.BookingID
+                            </td>
+
+                            <td>
+                                <span class="badge bg-secondary mb-1">
+                                    @category
+                                </span>
+                                <br />
+                                <span class="fw-semibold">
+                                    @serviceName
+                                </span>
+                            </td>
+
+                            <td>
+                                @item.BookingDate.ToString("dd MMM yyyy, hh:mm tt")
+                            </td>
+
+                            <td>
+                                @item.Persons
+                            </td>
+
+                            <td class="fw-bold text-success">
+                                @if (item.RestaurantID != null)
+                                {
+                                    <span>
+                                        @item.PriceRange
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        Rs. @item.TotalAmount.ToString("N2")
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.Status == "Confirmed")
+                                {
+                                    <span class="badge bg-success">
+                                        Confirmed
+                                    </span>
+                                }
+                                else if (item.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                }
+                                else if (item.Status == "Cancelled")
+                                {
+                                    <span class="badge bg-danger">
+                                        Cancelled
+                                    </span>
+                                }
+                                else if (item.Status == "Reserved")
+                                {
+                                    <span class="badge bg-primary">
+                                        Reserved
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-info">
+                                        @item.Status
+                                    </span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

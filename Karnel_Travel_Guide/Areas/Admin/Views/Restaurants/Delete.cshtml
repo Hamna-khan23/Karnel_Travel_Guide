@@ -1,0 +1,325 @@
+@* @model Karnel_Travel_Guide.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Delete Restaurant";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Delete Restaurant
+        </h2>
+
+        <p class="text-muted mb-0">
+            Confirm restaurant deletion
+        </p>
+
+    </div>
+
+
+    <!-- Delete Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0">
+                Delete Confirmation
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <div class="alert alert-warning">
+
+                <i class="bi bi-exclamation-triangle me-2"></i>
+
+                Are you sure you want to delete
+                <strong>@Model.Name</strong>?
+
+            </div>
+
+
+            <div class="row g-3">
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Restaurant Name
+                        </small>
+
+                        <strong>
+                            @Model.Name
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Cuisine
+                        </small>
+
+                        <span>
+                            @Model.Cuisine
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Price Range
+                        </small>
+
+                        <span>
+                            @Model.PriceRange
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Rating
+                        </small>
+
+                        <span>
+                            @Model.Rating
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            City
+                        </small>
+
+                        <span>
+                            @Model.City
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Availability
+                        </small>
+
+                        @if (Model.Availability)
+                        {
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">
+                                Not Available
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Description
+                        </small>
+
+                        <p class="mb-0">
+                            @Model.Description
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Restaurant Image -->
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-2">
+                            Restaurant Image
+                        </small>
+
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl"
+                                 alt="@Model.Name"
+                                 class="img-fluid rounded border shadow-sm"
+                                 style="max-height: 200px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                No Image Uploaded
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="d-flex gap-2 mt-4">
+
+                <form asp-action="Delete" method="post">
+
+                    <input type="hidden"
+                           asp-for="RestaurantID" />
+
+                    <button type="submit"
+                            class="btn btn-danger rounded-3 px-4">
+
+                        <i class="bi bi-trash me-1"></i>
+                        Delete
+
+                    </button>
+
+                </form>
+
+
+                <a asp-action="Index"
+                   class="btn btn-secondary rounded-3 px-4">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to List
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div> *@
+@model Karnel_Travel_Guide.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Delete Restaurant";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">Delete Restaurant</h2>
+        <p class="text-muted mb-0">Confirm deletion of this restaurant</p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                <strong>Are you sure?</strong> This action cannot be undone.
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-12 mb-2">
+                    <strong>Restaurant Images</strong>
+                    <div class="mt-2 d-flex flex-wrap gap-2">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            var images = Model.ImageUrl.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var img in images)
+                            {
+                                <img src="@Url.Content(img.Trim())" alt="@Model.Name" class="shadow-sm border rounded" style="max-height: 120px; width: 120px; object-fit: cover;" />
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">No Image Available</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Name</strong>
+                    <div class="mt-1">@Model.Name</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Cuisine</strong>
+                    <div class="mt-1">@Model.Cuisine</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Price Range</strong>
+                    <div class="mt-1">@Model.PriceRange</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Rating</strong>
+                    <div class="mt-1">@Model.Rating</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>City</strong>
+                    <div class="mt-1">@Model.City</div>
+                </div>
+            </div>
+
+            <form asp-area="Admin"
+                  asp-controller="Restaurants"
+                  asp-action="Delete"
+                  asp-route-restaurantid="@Model.RestaurantID"
+                  method="post">
+
+                <input type="hidden" asp-for="RestaurantID" />
+
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Delete Restaurant
+                </button>
+
+                <a asp-area="Admin"
+                   asp-controller="Restaurants"
+                   asp-action="Index"
+                   class="btn btn-secondary ms-2">
+                    <i class="bi bi-arrow-left me-1"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

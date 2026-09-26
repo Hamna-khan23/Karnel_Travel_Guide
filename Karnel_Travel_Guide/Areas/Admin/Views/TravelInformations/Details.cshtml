@@ -1,0 +1,309 @@
+@model Karnel_Travel_Guide.Models.TravelInformation
+
+@{
+    ViewData["Title"] = "Travel Information Details";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+
+    <!-- Page Header -->
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Travel Information Details
+            </h2>
+
+            <p class="text-muted mb-0">
+                View complete travel information
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to List
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Details Card -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0">
+                @Model.TransportType
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <div class="row g-4">
+
+
+                <!-- Travel ID -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Travel ID
+                        </div>
+
+                        <div>
+                            <strong>
+                                @Model.TravelID
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Transport Type -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Transport Type
+                        </div>
+
+                        <div>
+                            @Model.TransportType
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- From City -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            From City
+                        </div>
+
+                        <div>
+                            @Model.FromCity
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- To City -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            To City
+                        </div>
+
+                        <div>
+                            @Model.ToCity
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Route -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Route
+                        </div>
+
+                        <div>
+                            @Model.Route
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Price -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Price
+                        </div>
+
+                        <div>
+                            @Model.Price
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Departure Time -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Departure Time
+                        </div>
+
+                        <div>
+                            @Model.DepartureTime
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Arrival Time -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Arrival Time
+                        </div>
+
+                        <div>
+                            @Model.ArrivalTime
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Availability -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Availability
+                        </div>
+
+                        <div>
+
+                            @if (Model.Availability)
+                            {
+                                <span class="badge bg-success">
+                                    Available
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    Not Available
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+              
+
+                <!-- Description -->
+
+                <div class="col-12">
+
+                    <div class="d-flex">
+
+                        <div class="text-muted" style="width:195px;">
+                            Description
+                        </div>
+
+                        <div>
+                            @Model.Description
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <hr class="my-4" />
+
+
+            <!-- Buttons -->
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.TravelID"
+                   class="btn btn-warning btn-sm">
+
+                    <i class="bi bi-pencil me-1"></i>
+                    Edit
+
+                </a>
+
+
+                <a asp-action="Delete"
+                   asp-route-id="@Model.TravelID"
+                   class="btn btn-danger">
+
+                    <i class="bi bi-trash me-1"></i>
+                    Delete
+
+                </a>
+
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to List
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

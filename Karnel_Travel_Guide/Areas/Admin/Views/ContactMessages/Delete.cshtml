@@ -1,0 +1,158 @@
+﻿@model Karnel_Travel_Guide.Models.ContactMessage
+
+@{
+    ViewData["Title"] = "Delete Message";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Delete Message
+        </h2>
+
+        <p class="text-muted mb-0">
+            Confirm before deleting this contact message
+        </p>
+
+    </div>
+
+
+    <!-- Delete Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-danger text-white py-3">
+
+            <h5 class="mb-0">
+                <i class="bi bi-exclamation-triangle"></i>
+                Delete Contact Message
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <!-- Warning -->
+            <div class="alert alert-warning">
+
+                <i class="bi bi-exclamation-triangle-fill"></i>
+
+                <strong>Are you sure?</strong>
+
+                This message will be permanently deleted.
+
+            </div>
+
+
+            <!-- Message Information -->
+
+            <div class="mb-3">
+
+                <label class="fw-bold">
+                    Message ID
+                </label>
+
+                <p class="form-control-plaintext">
+                    @Model.MessageID
+                </p>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="fw-bold">
+                    Name
+                </label>
+
+                <p class="form-control-plaintext">
+                    @Model.Name
+                </p>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="fw-bold">
+                    Email
+                </label>
+
+                <p class="form-control-plaintext">
+                    @Model.Email
+                </p>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="fw-bold">
+                    Subject
+                </label>
+
+                <p class="form-control-plaintext">
+                    @Model.Subject
+                </p>
+
+            </div>
+
+
+            <div class="mb-4">
+
+                <label class="fw-bold">
+                    Message
+                </label>
+
+                <div class="border rounded p-3 bg-light">
+                    @Model.Message
+                </div>
+
+            </div>
+
+
+            <!-- Delete Form -->
+
+            <form asp-area="Admin"
+                  asp-controller="ContactMessages"
+                  asp-action="Delete"
+                  asp-route-messageid="@Model.MessageID"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="d-flex gap-2">
+
+                    <!-- Confirm Delete -->
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        <i class="bi bi-trash"></i>
+                        Yes, Delete Message
+
+                    </button>
+
+
+                    <!-- Cancel -->
+                    <a class="btn btn-secondary"
+                       asp-area="Admin"
+                       asp-controller="ContactMessages"
+                       asp-action="Index">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

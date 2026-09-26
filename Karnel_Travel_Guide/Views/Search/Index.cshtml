@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Search Page";
+}
+
+<!-- Breadcrumb Header Start -->
+<div class="container-fluid bg-breadcrumb py-5" style="background: linear-gradient(rgba(19, 53, 123, 0.8), rgba(19, 53, 123, 0.8)), url('/images/carousel-1.jpg'); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">Search & Discovery</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active text-white">Search</li>
+        </ol>
+    </div>
+</div>
+<!-- Breadcrumb Header End -->
+<!-- Search Filter Section Start -->
+<div class="container-fluid search-section py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Find Your Perfect Spot</h5>
+            <h1 class="mb-0">Search Tourist Destinations, Hotels & Resorts</h1>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-10">
+                <div class="bg-light rounded p-4 p-md-5 shadow-sm">
+                    <form asp-controller="Search" asp-action="Results" method="get">
+                        <div class="row g-3">
+                            <!-- Category Selection -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Search Category</label>
+                                <select class="form-select border-0 py-3" name="category">
+                                    <option value="all">All Categories</option>
+                                    <option value="tourist_spot">Tourist Spots</option>
+                                    <option value="hotel">Hotels & Resorts</option>
+                                    <option value="resort">Resorts Only</option>
+                                    <option value="restaurant">Restaurants</option>
+                                    <option value="package">Packages</option>
+                                    <option value="travel_info">Travel Information</option>
+                                </select>
+                            </div>
+
+                            <!-- Location Input (City or Place Name) -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Location</label>
+                                <input type="text" class="form-control border-0 py-3" name="location" placeholder="Enter city or place name...">
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Max Price ($)</label>
+                                <input type="number" class="form-control border-0 py-3" name="price" placeholder="e.g. 500">
+                            </div>
+
+                            <!-- Quality / Rating -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Quality / Rating</label>
+                                <select class="form-select border-0 py-3" name="quality">
+                                    <option value="">Any Rating</option>
+                                    <option value="5">5 Star</option>
+                                    <option value="4">4 Star & Above</option>
+                                    <option value="3">3 Star & Above</option>
+                                </select>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary rounded-pill py-3 px-5 w-100">
+                                    <i class="fa fa-search me-2"></i> Search Now
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search Filter Section End -->

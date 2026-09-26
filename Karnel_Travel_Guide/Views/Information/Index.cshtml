@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Our Services";
+}
+
+<div class="container-fluid service py-5">
+    <div class="container py-5">
+
+        <div class="text-center mx-auto mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3 text-primary">Our Services</h5>
+            <h1 class="mb-0">Explore Our Top Services</h1>
+        </div>
+
+        <div class="row g-4 text-center">
+
+            <!-- 1. HOTEL RESERVATION CARD -->
+            <div class="col-lg-4 col-md-6">
+                <a asp-controller="Hotels" asp-action="Index" class="text-decoration-none text-dark">
+                    <div class="service-item bg-light rounded p-4 border shadow-sm h-100">
+                        <div class="service-icon p-4 mb-4">
+                            <i class="fa fa-hotel fa-4x text-primary"></i>
+                        </div>
+                        <h4 class="mb-3">Hotel Reservation</h4>
+                        <p class="mb-4 text-muted">
+                            Find and book the best luxury and budget-friendly hotels at guaranteed best rates.
+                        </p>
+                        <span class="btn btn-primary px-4 py-2 rounded-pill">Explore Hotels</span>
+                    </div>
+                </a>
+            </div>
+            <!-- 2. RESORTS CARD -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-light rounded p-4 border shadow-sm h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="service-icon p-4 mb-4">
+                            <i class="fa fa-umbrella-beach fa-4x text-primary"></i>
+                        </div>
+                        <h4 class="mb-3">
+                            <a asp-controller="Resorts" asp-action="Index" class="text-decoration-none text-dark">
+                                Resort Booking
+                            </a>
+                        </h4>
+                        <p class="mb-4 text-muted">
+                            Relax and experience world-class amenities at top resort destinations worldwide.
+                        </p>
+                    </div>
+                    <div>
+                        <a asp-controller="Resorts" asp-action="Index" class="btn btn-primary px-4 py-2 rounded-pill">
+                            Explore Resorts
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. TOURIST SPOTS CARD -->
+            <div class="col-lg-4 col-md-6">
+                <a asp-controller="UserTouristSpots" asp-action="Index" class="text-decoration-none text-dark">
+                    <div class="service-item bg-light rounded p-4 border shadow-sm h-100">
+                        <div class="service-icon p-4 mb-4">
+                            <i class="fa fa-map-marked-alt fa-4x text-primary"></i>
+                        </div>
+                        <h4 class="mb-3">Tourist Spots</h4>
+                        <p class="mb-4 text-muted">
+                            Discover breathtaking destinations, historical sites, and popular local attractions.
+                        </p>
+                        <span class="btn btn-primary px-4 py-2 rounded-pill">Explore Spots</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 4. RESTAURANTS CARD -->
+            <div class="col-lg-4 col-md-6">
+                <a asp-controller="Restaurants" asp-action="Index" class="text-decoration-none text-dark">
+                    <div class="service-item bg-light rounded p-4 border shadow-sm h-100">
+                        <div class="service-icon p-4 mb-4">
+                            <i class="fa fa-utensils fa-4x text-primary"></i>
+                        </div>
+                        <h4 class="mb-3">Restaurants</h4>
+                        <p class="mb-4 text-muted">
+                            Explore top-rated dining locations and taste delicious food during your trips.
+                        </p>
+                        <span class="btn btn-primary px-4 py-2 rounded-pill">Explore Food</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 5. PACKAGES CARD -->
+            <div class="col-lg-4 col-md-6">
+                <a asp-controller="Packages" asp-action="Index" class="text-decoration-none text-dark">
+                    <div class="service-item bg-light rounded p-4 border shadow-sm h-100">
+                        <div class="service-icon p-4 mb-4">
+                            <i class="fa fa-cubes fa-4x text-primary"></i>
+                        </div>
+                        <h4 class="mb-3">Travel Packages</h4>
+                        <p class="mb-4 text-muted">
+                            Choose all-inclusive travel packages curated specifically for families and groups.
+                        </p>
+                        <span class="btn btn-primary px-4 py-2 rounded-pill">Explore Packages</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 6. TRAVEL GUIDE / INFO CARD -->
+            <div class="col-lg-4 col-md-6">
+                <a asp-controller="Travel" asp-action="Index" class="text-decoration-none text-dark">
+                    <div class="service-item bg-light rounded p-4 border shadow-sm h-100">
+                        <div class="service-icon p-4 mb-4">
+                            <i class="fa fa-info-circle fa-4x text-primary"></i>
+                        </div>
+                        <h4 class="mb-3">Travel Accomodations</h4>
+                        <p class="mb-4 text-muted">
+                            Get complete guides, travel tips, and essential information for your journey.
+                        </p>
+                        <span class="btn btn-primary px-4 py-2 rounded-pill">Explore Transport</span>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+﻿
+@model Karnel_Travel_Guide.Models.Booking
+
+@{
+    ViewData["Title"] = "Book Package";
+    string itemName = ViewBag.ItemName ?? "Travel Package";
+    decimal basePrice = ViewBag.BasePrice ?? 0;
+    int basePersons = ViewBag.BasePersons ?? 2;
+    DateTime? startDate = ViewBag.StartDate;
+    DateTime? endDate = ViewBag.EndDate;
+}
+
+<div class="container py-5" style="margin-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+
+                <div class="text-center mb-4">
+                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-2">
+                        Package Offer
+                    </span>
+
+                    <h2 class="fw-bold" style="color: #113264;">
+                        @itemName
+                    </h2>
+
+                    <p class="text-muted">
+                        Base Package Price:
+                        <strong class="text-dark">
+                            Rs. @basePrice.ToString("N0")
+                        </strong>
+                        for
+                        <strong class="text-dark">
+                            @basePersons Persons
+                        </strong>
+                    </p>
+                </div>
+
+                <form asp-action="BookPackage" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                    <!-- Hidden fields to pass package & date info -->
+                    <input type="hidden" asp-for="PackageID" />
+                    <input type="hidden" asp-for="CheckInDate" />
+                    <input type="hidden" asp-for="CheckOutDate" />
+
+                    <!-- Fixed Trip Schedule Box (Read Only Display) -->
+                    <div class="p-3 bg-light rounded-3 mb-4 border">
+                        <div class="row text-center">
+                            <div class="col-md-6 border-end">
+                                <small class="text-muted d-block fw-semibold">TRIP START DATE</small>
+                                <span class="fs-5 fw-bold text-dark">
+                                    <i class="bi bi-calendar-check text-primary me-2"></i>
+                                    @(startDate?.ToString("dd MMM, yyyy") ?? "As Scheduled")
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted d-block fw-semibold">TRIP END DATE</small>
+                                <span class="fs-5 fw-bold text-dark">
+                                    <i class="bi bi-calendar-x text-danger me-2"></i>
+                                    @(endDate?.ToString("dd MMM, yyyy") ?? "As Scheduled")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">
+                                Number of Persons
+                            </label>
+
+                            <input asp-for="Persons"
+                                   type="number"
+                                   min="1"
+                                   max="100"
+                                   class="form-control"
+                                   id="packagePersonsInput"
+                                   required />
+
+                            <small class="text-muted">
+                                Price is calculated proportionally based on @basePersons persons base price.
+                            </small>
+
+                            <span asp-validation-for="Persons" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">
+                                Special Requests (Optional)
+                            </label>
+
+                            <textarea asp-for="SpecialRequest"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Any customizations or preferences..."></textarea>
+
+                            <span asp-validation-for="SpecialRequest" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 bg-light p-3 rounded-3 text-center mt-3">
+                            <h5 class="mb-0 text-dark">
+                                Package Total Amount:
+                                <span class="text-primary fw-bold" id="packageTotalDisplay">
+                                    Rs. @basePrice.ToString("N0")
+                                </span>
+                            </h5>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit"
+                                    class="btn text-white w-100 rounded-pill py-3 fw-bold shadow-sm"
+                                    style="background-color: #113264;">
+                                Confirm Package Booking
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const basePrice = @basePrice;
+        const basePersons = @basePersons;
+        const personsInput = document.getElementById('packagePersonsInput');
+        const totalDisplay = document.getElementById('packageTotalDisplay');
+
+        personsInput.addEventListener('input', function() {
+            let selectedPersons = parseInt(this.value) || 1;
+            if (selectedPersons < 1) selectedPersons = 1;
+
+            let calculatedTotal = (basePrice / basePersons) * selectedPersons;
+            totalDisplay.innerText = 'Rs. ' + Math.round(calculatedTotal).toLocaleString();
+        });
+    </script>
+}

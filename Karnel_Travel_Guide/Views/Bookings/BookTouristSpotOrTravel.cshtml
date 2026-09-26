@@ -1,0 +1,141 @@
+﻿@model Karnel_Travel_Guide.Models.Booking
+
+@{
+    ViewData["Title"] = "Book Experience";
+    string itemName = ViewBag.ItemName ?? "Tourist Spot / Travel Info";
+    decimal pricePerPerson = ViewBag.PricePerPerson ?? 0;
+    string bookingAction = ViewBag.BookingAction ?? "BookTouristSpot";
+}
+
+<div class="container py-5" style="margin-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+
+                <div class="text-center mb-4">
+                    <span class="badge bg-primary px-3 py-2 rounded-pill mb-2">
+                        Per Person Booking
+                    </span>
+
+                    <h2 class="fw-bold" style="color: #113264;">
+                        @itemName
+                    </h2>
+
+                    <p class="text-muted">
+                        Rate Per Person:
+                        <strong class="text-dark">
+                            Rs. @pricePerPerson.ToString("N0")
+                        </strong>
+                    </p>
+                </div>
+
+                <form asp-action="@bookingAction" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                    <!-- Hidden IDs -->
+                    <input type="hidden" asp-for="TouristSpotID" />
+                    <input type="hidden" asp-for="TravelID" />
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Number of Persons
+                            </label>
+
+                            <input asp-for="Persons"
+                                   type="number"
+                                   min="1"
+                                   max="100"
+                                   class="form-control"
+                                   id="personsInput"
+                                   required />
+
+                            <small class="text-muted">
+                                Total amount will multiply by persons.
+                            </small>
+
+                            <span asp-validation-for="Persons"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Booking / Trip Date
+                            </label>
+
+                            <input asp-for="CheckInDate"
+                                   type="date"
+                                   class="form-control"
+                                   required />
+
+                            <span asp-validation-for="CheckInDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">
+                                Special Requests (Optional)
+                            </label>
+
+                            <textarea asp-for="SpecialRequest"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Any special instructions..."></textarea>
+
+                            <span asp-validation-for="SpecialRequest"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 bg-light p-3 rounded-3 text-center mt-3">
+                            <h5 class="mb-0 text-dark">
+                                Estimated Total:
+                                <span class="text-primary fw-bold"
+                                      id="totalDisplay">
+                                    Rs. @pricePerPerson.ToString("N0")
+                                </span>
+                            </h5>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit"
+                                    class="btn text-white w-100 rounded-pill py-3 fw-bold shadow-sm"
+                                    style="background-color: #113264;">
+                                Confirm & Book Now
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const pricePerPerson = @pricePerPerson;
+        const personsInput = document.getElementById('personsInput');
+        const totalDisplay = document.getElementById('totalDisplay');
+
+        personsInput.addEventListener('input', function () {
+
+            let persons = parseInt(this.value) || 1;
+
+            if (persons < 1)
+                persons = 1;
+
+            let total = pricePerPerson * persons;
+
+            totalDisplay.innerText =
+                'Rs. ' + total.toLocaleString();
+        });
+    </script>
+}

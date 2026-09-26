@@ -1,0 +1,308 @@
+@model Karnel_Travel_Guide.Models.Resort
+
+@{
+    ViewData["Title"] = "Delete Resort";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Delete Resort
+            </h2>
+
+            <p class="text-muted mb-0">
+                Review the resort before deleting it
+            </p>
+
+        </div>
+
+        <div>
+
+            <a asp-area="Admin"
+               asp-controller="Resorts"
+               asp-action="Index"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to List
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Delete Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0 text-danger">
+                Confirm Delete
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <div class="alert alert-warning">
+
+                <i class="bi bi-exclamation-triangle me-2"></i>
+
+                Are you sure you want to delete this resort?
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- Resort ID -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Resort ID
+                        </small>
+
+                        <strong>
+                            @Model.ResortID
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Name -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Name
+                        </small>
+
+                        <strong>
+                            @Model.Name
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- City -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            City
+                        </small>
+
+                        <span>
+                            @Model.City
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Price -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Price Per Night
+                        </small>
+
+                        <strong>
+                            @Model.PricePerNight
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Amenities -->
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-1">
+                            Amenities
+                        </small>
+
+                        @if (!string.IsNullOrEmpty(Model.Amenities))
+                        {
+                            @Model.Amenities
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                N/A
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Rating -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Rating
+                        </small>
+
+                        <span class="badge bg-warning text-dark">
+                            @Model.Rating
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Availability -->
+                <div class="col-12 col-md-6">
+
+                    <div class="border rounded p-3 h-100">
+
+                        <small class="text-muted d-block mb-1">
+                            Availability
+                        </small>
+
+                        @if (Model.Availability)
+                        {
+                            <span class="badge bg-success">
+                                Available
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Unavailable
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-2">
+                            Description
+                        </small>
+
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            @Model.Description
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                N/A
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+                <!-- Multiple Images Display -->
+                <div class="col-12">
+
+                    <div class="border rounded p-3">
+
+                        <small class="text-muted d-block mb-2">
+                            Resort Images
+                        </small>
+
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            var images = Model.ImageUrl.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                            <div class="row g-2">
+                                @foreach (var img in images)
+                                {
+                                    <div class="col-auto">
+                                        <img src="@img"
+                                             alt="@Model.Name"
+                                             class="img-fluid rounded border shadow-sm"
+                                             style="max-height: 200px; object-fit: cover;" />
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                No Image Uploaded
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            </div>
+
+
+            <!-- Delete Form -->
+            <form asp-area="Admin"
+                  asp-controller="Resorts"
+                  asp-action="Delete"
+                  method="post"
+                  class="mt-4">
+
+                <input type="hidden"
+                       asp-for="ResortID" />
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    <i class="bi bi-trash me-1"></i>
+                    Delete Resort
+
+                </button>
+
+
+                <a asp-area="Admin"
+                   asp-controller="Resorts"
+                   asp-action="Index"
+                   class="btn btn-secondary ms-2">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

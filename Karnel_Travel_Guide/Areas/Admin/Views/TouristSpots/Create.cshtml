@@ -1,0 +1,107 @@
+
+@model Karnel_Travel_Guide.Models.TouristSpot
+
+@{
+    ViewData["Title"] = "Create Tourist Spot";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">
+                Create Tourist Spot
+            </h2>
+            <p class="text-muted mb-0">
+                Add a new tourist spot
+            </p>
+        </div>
+
+        <div>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- Create Card -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="fw-bold mb-0">
+                Tourist Spot Information
+            </h5>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-4">
+                    <!-- Name -->
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Name" class="form-label fw-semibold"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter tourist spot name" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <!-- City -->
+                    <div class="col-12 col-md-6">
+                        <label asp-for="City" class="form-label fw-semibold"></label>
+                        <input asp-for="City" class="form-control" placeholder="Enter city" />
+                        <span asp-validation-for="City" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Category" class="form-label fw-semibold"></label>
+                        <input asp-for="Category" class="form-control" placeholder="e.g. Mountain, Beach, Historical" />
+                        <span asp-validation-for="Category" class="text-danger small"></span>
+                    </div>
+                    @* Price *@
+                    <div class="col-md-6">
+                        <label asp-for="PricePerNight" class="form-label fw-semibold">Price</label>
+                        <input asp-for="PricePerNight" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="PricePerNight" class="text-danger"></span>
+                    </div>
+                    <!-- Multiple Image Files Upload -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold">
+                            Upload Images
+                        </label>
+                        <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple />
+                        <small class="text-muted">Select multiple tourist spot images from your computer.</small>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-12">
+                        <label asp-for="Description" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Description" class="form-control" rows="5" placeholder="Enter tourist spot description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Create Tourist Spot
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

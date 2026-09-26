@@ -1,0 +1,190 @@
+﻿
+@model IEnumerable<Karnel_Travel_Guide.Models.TravelInformation>
+
+@{
+    ViewData["Title"] = "National Travel & Transport Facilities";
+}
+
+<!-- ================= FEATURED TRAVEL & TRANSPORTATION ================= -->
+<section class="py-4" style="margin-top: 20px;">
+    <div class="container">
+
+        <!-- HEADER SECTION -->
+        <div class="text-center mb-4">
+            <span class="fw-semibold" style="color: #113264; letter-spacing: 1px;">
+                MOVE WITH US
+            </span>
+
+            <h2 class="fw-bold mt-2" style="color: #113264;">
+                Travel & Transportation
+            </h2>
+
+            <p class="text-muted">
+                Choose reliable bus, train, and flight options across Pakistan.
+            </p>
+        </div>
+
+        <!-- SEARCH & FILTER FORM -->
+        <form asp-action="Index" method="get" class="row g-3 mb-5 justify-content-center">
+            <div class="col-md-4">
+                <input type="text"
+                       name="searchString"
+                       value="@ViewData["CurrentFilter"]"
+                       class="form-control rounded-pill px-4 shadow-sm border py-2"
+                       style="border-color: #e2e8f0; background-color: #ffffff;"
+                       placeholder="Search by City (From or To)..." />
+            </div>
+            <div class="col-md-3">
+                <select name="transportType"
+                        class="form-select rounded-pill px-3 shadow-sm border py-2"
+                        style="border-color: #e2e8f0; color: #113264; font-weight: 500; background-color: #ffffff;">
+                    <option value="">All Transport Types</option>
+                    <option value="Bus">Bus</option>
+                    <option value="Train">Train</option>
+                    <option value="Flight">Flight</option>
+                    <option value="Car">Car / Van</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit"
+                        class="btn text-white w-100 rounded-pill fw-semibold py-2 shadow-sm"
+                        style="background-color: #113264; border-color: #113264;">
+                    <i class="bi bi-funnel me-1"></i> Filter
+                </button>
+            </div>
+        </form>
+
+        <!-- TRAVEL CARDS GRID -->
+        <div class="row g-4">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    string transportIcon = "bi-bus-front";
+
+                    if (!string.IsNullOrEmpty(item.TransportType))
+                    {
+                        var type = item.TransportType.ToLower();
+                        if (type.Contains("flight") || type.Contains("air") || type.Contains("plane"))
+                        {
+                            transportIcon = "bi-airplane";
+                        }
+                        else if (type.Contains("train") || type.Contains("rail"))
+                        {
+                            transportIcon = "bi-train-front";
+                        }
+                        else if (type.Contains("car") || type.Contains("van") || type.Contains("taxi"))
+                        {
+                            transportIcon = "bi-car-front";
+                        }
+                    }
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card package-card border-0 shadow-sm h-100 rounded-4 overflow-hidden"
+                             style="border-radius: 1.25rem; transition: transform 0.2s, box-shadow 0.2s; background: #ffffff;">
+
+                            <!-- CARD HEADER WITH ICON & TRANSPORT TYPE -->
+                            <div class="p-4 pb-3" style="background: linear-gradient(135deg, #113264, #1b4b91); color: white;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center"
+                                             style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); font-size: 22px;">
+                                            <i class="bi @transportIcon text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold mb-0 text-white">@item.TransportType</h5>
+                                            <small class="text-light opacity-75">Scheduled Transport</small>
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-light text-dark rounded-pill px-3 py-2 fw-semibold"
+                                          style="color: #113264 !important; font-size: 0.9rem;">
+                                        Rs. @item.Price.ToString("N0")
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- CARD BODY -->
+                            <div class="card-body p-4 d-flex flex-column">
+
+                                <!-- ROUTE CITIES -->
+                                <div class="p-3 bg-light rounded-3 mb-3 border" style="border-radius: 0.75rem; border-color: #e2e8f0 !important;">
+                                    <div class="d-flex justify-content-between align-items-center text-center">
+                                        <div class="text-start">
+                                            <small class="text-muted d-block">From</small>
+                                            <strong class="fs-6" style="color: #113264;">@item.FromCity</strong>
+                                        </div>
+                                        <div>
+                                            <i class="bi bi-arrow-right fs-5" style="color: #113264;"></i>
+                                        </div>
+                                        <div class="text-end">
+                                            <small class="text-muted d-block">To</small>
+                                            <strong class="fs-6" style="color: #113264;">@item.ToCity</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ROUTE VIA -->
+                                @if (!string.IsNullOrEmpty(item.Route))
+                                {
+                                    <p class="small text-muted mb-2">
+                                        <i class="bi bi-signpost-split me-1" style="color: #1b4b91;"></i>
+                                        <strong>Route:</strong> @item.Route
+                                    </p>
+                                }
+
+                                <!-- TIMINGS -->
+                                <div class="row g-2 mb-3 small text-muted p-2 rounded-2" style="background-color: #f8fafc;">
+                                    <div class="col-6">
+                                        <i class="bi bi-clock me-1" style="color: #113264;"></i>
+                                        Dep: <strong>@item.DepartureTime</strong>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <i class="bi bi-clock-history me-1" style="color: #113264;"></i>
+                                        Arr: <strong>@item.ArrivalTime</strong>
+                                    </div>
+                                </div>
+
+                                <!-- DESCRIPTION -->
+                                @if (!string.IsNullOrEmpty(item.Description))
+                                {
+                                    <p class="text-muted small mb-4 flex-grow-1" style="min-height: 40px; line-height: 1.5;">
+                                        @item.Description
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-muted small mb-4 flex-grow-1" style="min-height: 40px; line-height: 1.5;">
+                                        Reliable transit facility available for your route.
+                                    </p>
+                                }
+
+                                <!-- ACTION BUTTON (View Details / Book Transport) -->
+                                <a asp-action="Details"
+                                   asp-route-id="@item.TravelID"
+                                   class="btn text-white w-100 rounded-pill shadow-sm mt-auto"
+                                   style="background-color: #113264; border-color: #113264; font-weight: 600; padding-top: 0.6rem; padding-bottom: 0.6rem;">
+                                    <i class="bi bi-ticket-perforated me-1"></i> Book Transport
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-4 border shadow-sm mx-auto" style="max-width: 500px; border-radius: 1.25rem;">
+                        <i class="bi bi-signpost-split fs-1 d-block mb-3" style="color: #113264;"></i>
+                        <h4 class="fw-bold" style="color: #113264;">No Travel Facilities Found</h4>
+                        <p class="text-muted">Try searching with a different city or category.</p>
+                        <a asp-action="Index" class="btn text-white rounded-pill px-4 fw-semibold mt-2" style="background-color: #113264;">
+                            Reset Filters
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>

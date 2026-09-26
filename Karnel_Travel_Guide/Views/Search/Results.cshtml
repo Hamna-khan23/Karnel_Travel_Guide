@@ -1,0 +1,89 @@
+﻿@model List<Karnel_Travel_Guide.Controllers.SearchResultViewModel>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+<!-- Breadcrumb Header Start --><div class="container-fluid bg-breadcrumb py-5" style="background: linear-gradient(rgba(19, 53, 123, 0.8), rgba(19, 53, 123, 0.8)), url('/images/carousel-1.jpg'); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+<div class="container text-center py-5" style="max-width: 900px;">
+    <h3 class="text-white display-3 mb-4">Search Results</h3>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Search" asp-action="Index">Search</a></li>
+        <li class="breadcrumb-item active text-white">Results</li>
+    </ol>
+</div>
+</div><!-- Breadcrumb Header End --><!-- Results Section Start --><div class="container-fluid py-5">
+<div class="container py-5">
+    <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+        <h5 class="section-title px-3">Explore Your Matches</h5>
+        <h1 class="mb-0">Found @Model.Count Results</h1>
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="rounded bg-light shadow-sm p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-primary px-3 py-2">@item.Category</span>
+                                @if (item.Price > 0)
+                                {
+                                    <span class="text-dark fw-bold">PKR @item.Price <small class="text-muted">/night</small></span>
+                                }
+                            </div>
+                            <h4 class="mb-2">@item.Name</h4>
+                            <p class="text-muted mb-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@item.Location</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <div class="text-warning">
+                                @for (int i = 0; i < item.Rating; i++)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                            </div>
+
+                            @{
+                                string targetController = "Home";
+                                string targetAction = "Details";
+
+                                // Aapke 6 controllers ke mutabiq mapping
+                                if (!string.IsNullOrEmpty(item.Category))
+                                {
+                                    var cat = item.Category.ToLower();
+                                    if (cat.Contains("resort")) { targetController = "Resorts"; }
+                                    else if (cat.Contains("restaurant")) { targetController = "Restaurants"; }
+                                    else if (cat.Contains("tourist") || cat.Contains("spot")) { targetController = "userTouristspots"; }
+                                    else if (cat.Contains("package")) { targetController = "Packages"; }
+                                    else if (cat.Contains("travel") || cat.Contains("info")) { targetController = "Travel"; }
+                                    else if (cat.Contains("hotel")) { targetController = "Hotels"; }
+                                }
+                            }
+
+                            <a asp-controller="@targetController"
+                               asp-action="@targetAction"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="fa fa-search fa-4x text-muted"></i>
+            </div>
+            <h3>No destinations or places found matching your criteria.</h3>
+            <p class="text-muted">Try changing your search filters or location name.</p>
+            <a asp-controller="Search" asp-action="Index" class="btn btn-primary rounded-pill mt-3 px-4 py-2">Search Again</a>
+        </div>
+    }
+</div></div><!-- Results Section End -->

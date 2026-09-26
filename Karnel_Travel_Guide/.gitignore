@@ -1,0 +1,23 @@
+## Visual Studio / VS Code
+.vs/
+.vscode/
+
+## Build results
+bin/
+obj/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## ASP.NET Core
+wwwroot/uploads/
+
+## Logs
+*.log
+
+## OS files
+.DS_Store
+Thumbs.db

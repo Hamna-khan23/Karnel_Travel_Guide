@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Karnel_Travel_Guide.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+
+        <!-- Title -->
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase">Restaurants</h5>
+            <h1 class="display-5">Explore Our Dining Places</h1>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <form method="get" asp-controller="Restaurants" asp-action="Index" class="mb-5">
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <input type="text" name="searchString" class="form-control form-control-lg" placeholder="Search by restaurant name or city..." />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Restaurants Cards Grid -->
+        <div class="row g-4">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var restaurant in Model)
+                {
+                    string firstImage = "/images/default-restaurant.jpg"; // Default placeholder fallback
+                    if (!string.IsNullOrEmpty(restaurant.ImageUrl))
+                    {
+                        var images = restaurant.ImageUrl.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        if (images.Length > 0)
+                        {
+                            firstImage = images[0].Trim();
+                        }
+                    }
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 shadow-sm border-0 rounded overflow-hidden">
+                            <img src="@Url.Content(firstImage)" class="card-img-top" alt="@restaurant.Name" style="height: 230px; object-fit: cover;" />
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary px-3 py-2">@restaurant.City</span>
+                                    <span class="text-warning fw-bold">
+                                        <i class="fa fa-star me-1"></i>@restaurant.Rating
+                                    </span>
+                                </div>
+                                <h4 class="card-title fw-bold mb-2">@restaurant.Name</h4>
+                                <p class="text-muted small mb-2"><i class="fa fa-utensils me-1"></i> @restaurant.Cuisine</p>
+                                <p class="card-text text-muted small mb-3">
+                                    @(restaurant.Description != null && restaurant.Description.Length > 90 ? restaurant.Description.Substring(0, 90) + "..." : restaurant.Description)
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                                    <div>
+                                        <span class="h6 fw-bold text-success mb-0">@restaurant.PriceRange</span>
+                                    </div>
+                                    <a asp-controller="Restaurants" asp-action="Details" asp-route-id="@restaurant.RestaurantID" class="btn btn-outline-primary btn-sm">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted fs-5">No restaurants available right now.</p>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

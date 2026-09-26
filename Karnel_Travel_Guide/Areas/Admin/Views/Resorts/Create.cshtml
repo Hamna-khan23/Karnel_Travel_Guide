@@ -1,0 +1,98 @@
+
+@model Karnel_Travel_Guide.Models.Resort
+
+@{
+    ViewData["Title"] = "Create Resort";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Create Resort</h2>
+            <p class="text-muted mb-0">Add a new resort</p>
+        </div>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left me-1"></i> Back to List
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="fw-bold mb-0">Resort Information</h5>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label fw-semibold"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter resort name" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="City" class="form-label fw-semibold"></label>
+                        <input asp-for="City" class="form-control" placeholder="Enter city" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PricePerNight" class="form-label fw-semibold"></label>
+                        <input asp-for="PricePerNight" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="PricePerNight" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Rating" class="form-label fw-semibold"></label>
+                        <input asp-for="Rating" class="form-control" type="number" step="0.1" min="0" max="5" />
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Amenities" class="form-label fw-semibold"></label>
+                        <input asp-for="Amenities" class="form-control" placeholder="e.g. WiFi, Pool, Parking" />
+                        <span asp-validation-for="Amenities" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Description" class="form-label fw-semibold"></label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter resort description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <!-- MULTIPLE FILE UPLOAD FIELD -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Resort Images</label>
+                        <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple />
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        <small class="text-muted d-block mt-1">
+                            Select resort images from your computer (you can select multiple images by holding Ctrl or Shift).
+                        </small>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input asp-for="Availability" class="form-check-input" />
+                            <label asp-for="Availability" class="form-check-label fw-semibold"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-1"></i> Create Resort
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

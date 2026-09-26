@@ -1,0 +1,468 @@
+@* @model Karnel_Travel_Guide.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Edit Restaurant";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Edit Restaurant
+        </h2>
+
+        <p class="text-muted mb-0">
+            Update restaurant information
+        </p>
+
+    </div>
+
+
+    <!-- Form Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0">
+                Restaurant Information
+            </h5>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-action="Edit" enctype="multipart/form-data">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <input type="hidden" asp-for="RestaurantID" />
+
+                <!-- Preserve existing image path -->
+                <input type="hidden" asp-for="ImageUrl" />
+
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Name"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Name"
+                               class="form-control" />
+
+                        <span asp-validation-for="Name"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Cuisine"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Cuisine"
+                               class="form-control" />
+
+                        <span asp-validation-for="Cuisine"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="PriceRange"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="PriceRange"
+                               class="form-control" />
+
+                        <span asp-validation-for="PriceRange"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Rating"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Rating"
+                               class="form-control" />
+
+                        <span asp-validation-for="Rating"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="City"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="City"
+                               class="form-control" />
+
+                        <span asp-validation-for="City"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold d-block">
+                            Availability
+                        </label>
+
+                        <div class="form-check mt-2">
+
+                            <input asp-for="Availability"
+                                   class="form-check-input" />
+
+                            <label asp-for="Availability"
+                                   class="form-check-label">
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <label asp-for="Description"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="4">
+                        </textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- File Upload Input with Preview -->
+                    <div class="col-12">
+
+                        <label class="form-label fw-semibold">
+                            Restaurant Image
+                        </label>
+
+                        @if (!string.IsNullOrEmpty(Model?.ImageUrl))
+                        {
+                            <div class="mb-2">
+                                <img src="@Model.ImageUrl" alt="Current Image" class="img-thumbnail" style="max-height: 120px;" />
+                                <small class="d-block text-muted">Current Image</small>
+                            </div>
+                        }
+
+                        <input type="file"
+                               name="imageFile"
+                               class="form-control"
+                               accept="image/*" />
+
+                        <span asp-validation-for="ImageUrl"
+                              class="text-danger">
+                        </span>
+
+                        <small class="text-muted">
+                            Upload a new image to replace the current one (optional).
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex gap-2 mt-4">
+
+                    <button type="submit"
+                            class="btn btn-warning rounded-3 px-4">
+
+                        <i class="bi bi-save me-1"></i>
+                        Save Changes
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary rounded-3 px-4">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Back to List
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@
+@model Karnel_Travel_Guide.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Edit Restaurant";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Edit Restaurant
+        </h2>
+
+        <p class="text-muted mb-0">
+            Update restaurant information
+        </p>
+
+    </div>
+
+
+    <!-- Form Card -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0">
+                Restaurant Information
+            </h5>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-area="Admin"
+                  asp-controller="Restaurants"
+                  asp-action="Edit"
+                  asp-route-restaurantid="@Model.RestaurantID"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <input type="hidden" asp-for="RestaurantID" />
+
+                <!-- Preserve existing image path -->
+                <input type="hidden" asp-for="ImageUrl" />
+
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Name"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Name"
+                               class="form-control" />
+
+                        <span asp-validation-for="Name"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Cuisine"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Cuisine"
+                               class="form-control" />
+
+                        <span asp-validation-for="Cuisine"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="PriceRange"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="PriceRange"
+                               class="form-control" />
+
+                        <span asp-validation-for="PriceRange"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Rating"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Rating"
+                               class="form-control" />
+
+                        <span asp-validation-for="Rating"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label asp-for="City"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="City"
+                               class="form-control" />
+
+                        <span asp-validation-for="City"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold d-block">
+                            Availability
+                        </label>
+
+                        <div class="form-check mt-2">
+
+                            <input asp-for="Availability"
+                                   class="form-check-input" />
+
+                            <label asp-for="Availability"
+                                   class="form-check-label">
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <label asp-for="Description"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="4">
+                        </textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- File Upload Input with Preview and Multiple Management -->
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Current Images</label>
+                        <div class="mb-3 d-flex flex-wrap gap-3">
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                var images = Model.ImageUrl.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (var img in images)
+                                {
+                                    var trimmedImg = img.Trim();
+                                    <div class="card p-1 text-center shadow-sm" style="width: 110px;">
+                                        <img src="@Url.Content(trimmedImg)" alt="@Model.Name" class="rounded" style="height: 80px; width: 100%; object-fit: cover;" />
+                                        <div class="form-check mt-1 d-flex justify-content-center align-items-center gap-1">
+                                            <input type="checkbox" name="removeImages" value="@trimmedImg" class="form-check-input" id="chk_@trimmedImg.GetHashCode()" />
+                                            <label class="form-check-label text-danger small fw-semibold" for="chk_@trimmedImg.GetHashCode()">Remove</label>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted d-block">No Images Uploaded</span>
+                            }
+                        </div>
+
+                        <label class="form-label fw-semibold">Add More Images</label>
+                        <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple />
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex gap-2 mt-4">
+
+                    <button type="submit"
+                            class="btn btn-warning rounded-3 px-4">
+
+                        <i class="bi bi-save me-1"></i>
+                        Save Changes
+
+                    </button>
+
+                    <a asp-area="Admin" asp-controller="Restaurants" asp-action="Index"
+                       class="btn btn-secondary rounded-3 px-4">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Back to List
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,393 @@
+@model IEnumerable<Karnel_Travel_Guide.Models.Resort>
+
+@{
+    ViewData["Title"] = "Resorts";
+}
+
+<style>
+
+    .resort-table {
+        width: 100%;
+        min-width: 1200px;
+        margin-bottom: 0;
+        font-size: 13px;
+        border-collapse: collapse;
+    }
+
+    .resort-table th,
+    .resort-table td {
+        padding: 11px 8px;
+        vertical-align: middle;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .resort-table th {
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+        text-transform: uppercase;
+    }
+
+    .resort-table td {
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+
+    .resort-name {
+        min-width: 140px;
+        font-weight: 600;
+    }
+
+    .resort-city {
+        min-width: 100px;
+        white-space: nowrap !important;
+    }
+
+    .resort-price {
+        min-width: 110px;
+        white-space: nowrap !important;
+    }
+
+    .resort-amenities {
+        min-width: 180px;
+        max-width: 230px;
+    }
+
+    .resort-rating {
+        min-width: 80px;
+        white-space: nowrap !important;
+    }
+
+    .resort-availability {
+        min-width: 120px;
+        white-space: nowrap !important;
+    }
+
+    .resort-description {
+        min-width: 200px;
+        max-width: 260px;
+    }
+
+    .resort-image {
+        min-width: 150px;
+        max-width: 180px;
+        word-break: break-all;
+    }
+
+    .resort-actions {
+        min-width: 250px !important;
+        width: 250px !important;
+        white-space: nowrap !important;
+    }
+
+    .resort-actions-wrapper {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+    }
+
+    .resort-actions-wrapper a {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        width: auto !important;
+        min-width: 0 !important;
+        padding: 7px 11px !important;
+        font-size: 12px !important;
+        font-weight: 600;
+        white-space: nowrap !important;
+        text-decoration: none !important;
+        border-radius: 6px;
+    }
+
+    .resort-actions-wrapper a i {
+        font-size: 14px !important;
+        line-height: 1;
+    }
+
+    .resort-details-btn {
+        background-color: #0dcaf0 !important;
+        border-color: #0dcaf0 !important;
+        color: #fff !important;
+    }
+
+    .resort-details-btn:hover {
+        background-color: #0aa2c0 !important;
+        border-color: #0aa2c0 !important;
+        color: #fff !important;
+    }
+
+    .resort-edit-btn {
+        background-color: #ffc107 !important;
+        border-color: #ffc107 !important;
+        color: #000 !important;
+    }
+
+    .resort-edit-btn:hover {
+        background-color: #e0a800 !important;
+        border-color: #e0a800 !important;
+        color: #000 !important;
+    }
+
+    .resort-delete-btn {
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+        color: #fff !important;
+    }
+
+    .resort-delete-btn:hover {
+        background-color: #bb2d3b !important;
+        border-color: #bb2d3b !important;
+        color: #fff !important;
+    }
+
+    .create-resort-btn {
+        background-color: #198754 !important;
+        border-color: #198754 !important;
+        color: #fff !important;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 6px;
+    }
+
+    .create-resort-btn:hover {
+        background-color: #157347 !important;
+        border-color: #146c43 !important;
+        color: #fff !important;
+    }
+
+    .resort-card {
+        width: 100%;
+        border: 0;
+        border-radius: 8px;
+    }
+
+    .resort-table-container {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .resort-table-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .resort-table-container::-webkit-scrollbar-thumb {
+        background: #b8b8b8;
+        border-radius: 10px;
+    }
+
+    .resort-table-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+</style>
+
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- PAGE HEADER -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                Resorts
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage resorts and accommodations
+            </p>
+        </div>
+
+        <!-- CREATE -->
+        <div>
+            <a asp-area="Admin"
+               asp-controller="Resorts"
+               asp-action="Create"
+               class="btn create-resort-btn">
+
+                <i class="bi bi-plus-circle me-1"></i>
+                Create Resort
+
+            </a>
+        </div>
+
+    </div>
+
+
+    <!-- CARD -->
+    <div class="card shadow-sm resort-card">
+
+        <div class="card-body p-3">
+
+            <div class="resort-table-container">
+
+                <table class="table table-hover align-middle resort-table">
+
+                    <thead>
+                        <tr>
+
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Price Per Night</th>
+                            <th>Amenities</th>
+                            <th>Rating</th>
+                            <th>Availability</th>
+                            <th>Description</th>
+                            <th>Image</th>
+
+                            <!-- CENTERED ACTIONS -->
+                            <th class="resort-actions">
+                                Actions
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td class="resort-name">
+                                    @item.Name
+                                </td>
+
+                                <td class="resort-city">
+                                    @item.City
+                                </td>
+
+                                <td class="resort-price">
+                                    @item.PricePerNight.ToString("N2")
+                                </td>
+
+                                <td class="resort-amenities">
+                                    @if (!string.IsNullOrEmpty(item.Amenities))
+                                    {
+                                        @item.Amenities
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
+                                    }
+                                </td>
+
+                                <td class="resort-rating">
+                                    @item.Rating
+                                </td>
+
+                                <td class="resort-availability">
+
+                                    @if (item.Availability)
+                                    {
+                                        <span class="badge bg-success">
+                                            Available
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Not Available
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td class="resort-description">
+
+                                    @if (!string.IsNullOrEmpty(item.Description))
+                                    {
+                                        @item.Description
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">
+                                            N/A
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        var firstImg = item.ImageUrl.Split(',')[0];
+                                        <img src="@firstImg" alt="@item.Name" class="img-thumbnail" style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">No Image</span>
+                                    }
+                                </td>
+
+
+                                <!-- ACTIONS -->
+                                <td class="resort-actions">
+
+                                    <div class="resort-actions-wrapper">
+
+                                        <!-- DETAILS -->
+                                        <a asp-area="Admin"
+                                           asp-controller="Resorts"
+                                           asp-action="Details"
+                                           asp-route-resortid="@item.ResortID"
+                                           class="btn resort-details-btn"
+                                           title="View Details">
+
+                                            <i class="bi bi-eye"></i>
+                                            <span>Details</span>
+
+                                        </a>
+
+
+                                        <!-- EDIT -->
+                                        <a asp-area="Admin"
+                                           asp-controller="Resorts"
+                                           asp-action="Edit"
+                                           asp-route-resortid="@item.ResortID"
+                                           class="btn resort-edit-btn"
+                                           title="Edit Resort">
+
+                                            <i class="bi bi-pencil"></i>
+                                            <span>Edit</span>
+
+                                        </a>
+
+
+                                        <!-- DELETE -->
+                                        <a asp-area="Admin"
+                                           asp-controller="Resorts"
+                                           asp-action="Delete"
+                                           asp-route-resortid="@item.ResortID"
+                                           class="btn resort-delete-btn"
+                                           title="Delete Resort">
+
+                                            <i class="bi bi-trash"></i>
+                                            <span>Delete</span>
+
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

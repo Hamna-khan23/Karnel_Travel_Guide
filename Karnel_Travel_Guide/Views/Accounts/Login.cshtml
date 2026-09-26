@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    .full-page-bg {
+        background-color: #f4f8fb;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 150px 15px 40px 15px;
+    }
+
+    .account-card {
+        width: 100%;
+        max-width: 480px;
+        border: none;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 35px rgba(13, 110, 253, 0.15);
+        background: #ffffff;
+    }
+
+    .account-header {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        color: white;
+        padding: 30px 25px;
+        text-align: center;
+    }
+
+    .account-header-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 28px;
+    }
+
+    .account-header h2 {
+        margin-bottom: 6px;
+        font-weight: 700;
+    }
+
+    .account-header p {
+        margin-bottom: 0;
+        opacity: 0.9;
+    }
+
+    .account-body {
+        padding: 30px;
+    }
+
+    .account-label {
+        color: #173b63;
+        font-weight: 600;
+    }
+
+    .account-input {
+        border: 1px solid #c9dff5;
+        border-radius: 8px;
+        padding: 11px 13px;
+    }
+
+        .account-input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+        }
+
+    .login-btn {
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 11px;
+        border-radius: 8px;
+    }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #0a58ca, #084298);
+            color: white;
+        }
+
+    .account-link {
+        color: #0d6efd;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .account-link:hover {
+            color: #084298;
+        }
+</style>
+
+<div class="full-page-bg">
+    <div class="account-card">
+
+        <!-- HEADER -->
+        <div class="account-header">
+            <div class="account-header-icon">
+                <i class="bi bi-box-arrow-in-right"></i>
+            </div>
+
+            <h2>Welcome Back</h2>
+            <p>Login to your Karnel Travel Guide account</p>
+        </div>
+
+        <!-- BODY -->
+        <div class="account-body">
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <!-- LOGIN FORM -->
+            <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                @Html.AntiForgeryToken()
+
+               
+                <input type="hidden"
+                       name="returnUrl"
+                       value="@ViewData["ReturnUrl"]" />
+
+                <!-- EMAIL -->
+                <div class="mb-3">
+                    <label for="email" class="form-label account-label">
+                        Email
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           class="form-control account-input"
+                           placeholder="Enter your email"
+                           required />
+                    
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-3">
+                    <label for="password" class="form-label account-label">
+                        Password
+                    </label>
+
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-control account-input"
+                           placeholder="Enter your password"
+                           required />
+                </div>
+
+                <!-- LOGIN BUTTON -->
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn login-btn">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>
+                        Login
+                    </button>
+                </div>
+
+            </form>
+
+            <!-- REGISTER -->
+            <div class="text-center mt-4">
+                <span class="text-muted">
+                    Don't have an account?
+                </span>
+
+                <a asp-controller="Accounts"
+                   asp-action="Register"
+                   asp-route-returnUrl="@ViewData["ReturnUrl"]"
+                   class="account-link">
+                    Register here
+                </a>
+                
+            </div>
+
+        </div>
+
+    </div>
+</div>

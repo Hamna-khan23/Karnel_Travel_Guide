@@ -1,0 +1,206 @@
+﻿@model Karnel_Travel_Guide.Models.Booking
+
+@{
+    ViewData["Title"] = "Edit Booking";
+
+    string bookedItemType = "Unknown";
+    string bookedItemName = "N/A";
+
+    if (Model.Package != null) { bookedItemType = "Package"; bookedItemName = Model.Package.Title; }
+    else if (Model.Hotel != null) { bookedItemType = "Hotel"; bookedItemName = Model.Hotel.Name; }
+    else if (Model.Resort != null) { bookedItemType = "Resort"; bookedItemName = Model.Resort.Name; }
+    else if (Model.TouristSpot != null) { bookedItemType = "Tourist Spot"; bookedItemName = Model.TouristSpot.Name; }
+    else if (Model.Restaurant != null) { bookedItemType = "Restaurant"; bookedItemName = Model.Restaurant.Name; }
+    else if (Model.TravelInformation != null) { bookedItemType = "Travel"; bookedItemName = Model.TravelInformation.TransportType; }
+}
+
+<style>
+    .edit-booking-page {
+        width: 100%;
+        padding: 25px 20px;
+    }
+
+    .edit-booking-header {
+        margin-bottom: 25px;
+    }
+
+    .edit-booking-card {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+    }
+
+        .edit-booking-card .card-header {
+            background: #fff;
+            padding: 18px 22px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .edit-booking-card .card-body {
+            padding: 25px;
+        }
+
+    .edit-booking-page .form-label {
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .edit-booking-page .form-control,
+    .edit-booking-page .form-select {
+        min-height: 44px;
+        border-radius: 7px;
+    }
+
+    .readonly-field {
+        background-color: #f5f6f8 !important;
+        color: #6c757d;
+    }
+
+    .edit-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+        .edit-buttons .btn {
+            min-width: 130px;
+            padding: 9px 16px;
+            border-radius: 7px;
+        }
+
+    @@media (max-width: 768px) {
+        .edit-booking-page {
+            padding: 20px 10px;
+        }
+
+        .edit-booking-card .card-body {
+            padding: 18px;
+        }
+
+        .edit-buttons .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="edit-booking-page">
+    <div class="edit-booking-header">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <h2 class="fw-bold mb-1">Edit Booking</h2>
+                <p class="text-muted mb-0">Update booking information and status</p>
+            </div>
+            <div>
+                <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Bookings
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm edit-booking-card">
+        <div class="card-header">
+            <h5 class="fw-bold mb-0">Booking #@Model.BookingID - @bookedItemType: @bookedItemName</h5>
+        </div>
+
+        <div class="card-body">
+            <form asp-area="Admin" asp-controller="Bookings" asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+
+                <!-- Hidden Booking ID -->
+                <input type="hidden" name="bookingid" value="@Model.BookingID" />
+
+                <div class="row g-4">
+                    <!-- BOOKING ID -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Booking ID</label>
+                        <input type="text" class="form-control readonly-field" value="@Model.BookingID" readonly />
+                    </div>
+
+                    <!-- BOOKED ITEM (NEW) -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Booked Item (@bookedItemType)</label>
+                        <input type="text" class="form-control readonly-field fw-semibold text-primary" value="@bookedItemName" readonly />
+                    </div>
+
+                    <!-- USER -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Customer</label>
+                        <input type="text" class="form-control readonly-field" value="@(Model.User != null ? Model.User.Name : $"User #{Model.UserID}")" readonly />
+                    </div>
+
+                    <!-- BOOKING DATE -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Booking Date</label>
+                        <input type="text" class="form-control readonly-field" value="@Model.BookingDate.ToString("dd-MM-yyyy HH:mm")" readonly />
+                    </div>
+
+                    <!-- PERSONS -->
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Persons" class="form-label">Number of Persons</label>
+                        <input asp-for="Persons" type="number" min="1" max="100" class="form-control" />
+                        <span asp-validation-for="Persons" class="text-danger small"></span>
+                    </div>
+
+                    <!-- STATUS -->
+                    <div class="col-12 col-md-6">
+                        <label asp-for="Status" class="form-label">Booking Status</label>
+                        <select asp-for="Status" class="form-select">
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Reserved">Reserved</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger small"></span>
+                    </div>
+
+                    <!-- TOTAL AMOUNT / PRICE RANGE -->
+                    @if (Model.RestaurantID.HasValue)
+                    {
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">Restaurant Price Range</label>
+                            <input type="text" name="PriceRange" class="form-control" value="@Model.PriceRange" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12 col-md-6">
+                            <label asp-for="TotalAmount" class="form-label">Total Amount (Rs.)</label>
+                            <input asp-for="TotalAmount" type="number" step="0.01" min="0" class="form-control" />
+                            <span asp-validation-for="TotalAmount" class="text-danger small"></span>
+                        </div>
+                    }
+
+                    <!-- SPECIAL REQUEST -->
+                    <div class="col-12">
+                        <label asp-for="SpecialRequest" class="form-label">Special Request</label>
+                        <textarea asp-for="SpecialRequest" class="form-control" rows="4" placeholder="Enter special request..."></textarea>
+                        <span asp-validation-for="SpecialRequest" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="edit-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-1"></i> Save Changes
+                    </button>
+
+                    <a asp-area="Admin" asp-controller="Bookings" asp-action="Details" asp-route-bookingid="@Model.BookingID" class="btn btn-info text-white">
+                        <i class="bi bi-eye me-1"></i> Details
+                    </a>
+
+                    <a asp-area="Admin" asp-controller="Bookings" asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

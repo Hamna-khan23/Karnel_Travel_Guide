@@ -1,0 +1,63 @@
+﻿@model Karnel_Travel_Guide.Models.Booking
+
+@{
+    ViewData["Title"] = "Reserve Restaurant";
+    string itemName = ViewBag.ItemName ?? "Restaurant";
+    string priceRange = ViewBag.PriceRange ?? "N/A";
+}
+
+<div class="container py-5" style="margin-top: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <div class="text-center mb-4">
+                    <span class="badge bg-success px-3 py-2 rounded-pill mb-2">Restaurant Reservation</span>
+                    <h2 class="fw-bold" style="color: #113264;">@itemName</h2>
+                    <p class="text-muted">Price Range: <strong class="text-dark">@priceRange</strong></p>
+                </div>
+
+                <form asp-action="BookRestaurant" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All" class="text-danger mb-3 fw-semibold"></div>
+
+                    <!-- ZAROORI: Hidden field for RestaurantID -->
+                    <input type="hidden" asp-for="RestaurantID" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Number of Persons</label>
+                            <input asp-for="Persons" type="number" min="1" max="100" class="form-control" required />
+                            <small class="text-muted">Table reservation count.</small>
+                            <span asp-validation-for="Persons" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Reservation Date</label>
+                            <input asp-for="CheckInDate" type="date" class="form-control" required />
+                            <span asp-validation-for="CheckInDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Special Requests (Optional)</label>
+                            <textarea asp-for="SpecialRequest" class="form-control" rows="3" placeholder="Any dietary requirements or table preferences..."></textarea>
+                            <span asp-validation-for="SpecialRequest" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn text-white w-100 rounded-pill py-3 fw-bold shadow-sm" style="background-color: #113264;">
+                                Confirm Table Reservation
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

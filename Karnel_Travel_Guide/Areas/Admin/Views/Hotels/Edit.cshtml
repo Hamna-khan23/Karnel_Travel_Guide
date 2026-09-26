@@ -1,0 +1,119 @@
+@model Karnel_Travel_Guide.Models.Hotel
+
+@{
+    ViewData["Title"] = "Edit Hotel";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">Edit Hotel</h2>
+        <p class="text-muted mb-0">Update hotel information</p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <form asp-area="Admin"
+                  asp-controller="Hotels"
+                  asp-action="Edit"
+                  asp-route-hotelid="@Model.HotelID"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="HotelID" />
+                <input type="hidden" asp-for="ImageUrl" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label fw-semibold">Hotel Name</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="City" class="form-label fw-semibold">City</label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="PricePerNight" class="form-label fw-semibold">Price Per Night</label>
+                        <input asp-for="PricePerNight" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="PricePerNight" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="Rating" class="form-label fw-semibold">Rating</label>
+                        <input asp-for="Rating" class="form-control" type="number" step="0.1" min="0" max="5" />
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="TotalRooms" class="form-label fw-semibold">Total Rooms</label>
+                        <input asp-for="TotalRooms" class="form-control" type="number" min="0" />
+                        <span asp-validation-for="TotalRooms" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Description" class="form-label fw-semibold">Description</label>
+                        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Current Image</label>
+                          <div class="col-md-12">
+                        <label class="form-label fw-semibold">Current Images</label>
+                        <div class="mb-3 d-flex flex-wrap gap-3">
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                var images = Model.ImageUrl.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (var img in images)
+                                {
+                                    var trimmedImg = img.Trim();
+                                    <div class="card p-1 text-center shadow-sm" style="width: 110px;">
+                                        <img src="@Url.Content(trimmedImg)" alt="@Model.Name" class="rounded" style="height: 80px; width: 100%; object-fit: cover;" />
+                                        <div class="form-check mt-1 d-flex justify-content-center align-items-center gap-1">
+                                            <input type="checkbox" name="removeImages" value="@trimmedImg" class="form-check-input" id="chk_@trimmedImg.GetHashCode()" />
+                                            <label class="form-check-label text-danger small fw-semibold" for="chk_@trimmedImg.GetHashCode()">Remove</label>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted d-block">No Images Uploaded</span>
+                            }
+                        </div>
+
+                        <label class="form-label fw-semibold">Add More Images</label>
+                        <input type="file" name="imageFiles" class="form-control" accept="image/*" multiple />
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-check">
+                            <input asp-for="Availability" class="form-check-input" />
+                            <label asp-for="Availability" class="form-check-label fw-semibold">Available</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-warning px-4">
+                        <i class="bi bi-save me-1"></i> Save Changes
+                    </button>
+                    <a asp-area="Admin" asp-controller="Hotels" asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Back
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Karnel_Travel_Guide.Models.Resort>
+
+@{
+    ViewData["Title"] = "Resorts";
+}
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+
+        <!-- Title -->
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase">Resorts</h5>
+            <h1 class="display-5">Explore Our Luxury Resorts</h1>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <form method="get" asp-controller="Resorts" asp-action="Index" class="mb-5">
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <input type="text" name="searchString" class="form-control form-control-lg" placeholder="Search by resort name or city..." />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Resorts Cards Grid -->
+        <div class="row g-4">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var resort in Model)
+                {
+                    string firstImage = "/images/default-resort.jpg"; // Default placeholder fallback
+                    if (!string.IsNullOrEmpty(resort.ImageUrl))
+                    {
+                        var images = resort.ImageUrl.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                        if (images.Length > 0)
+                        {
+                            firstImage = images[0].Trim();
+                        }
+                    }
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 shadow-sm border-0 rounded overflow-hidden">
+                            <img src="@firstImage" class="card-img-top" alt="@resort.Name" style="height: 230px; object-fit: cover;" />
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary px-3 py-2">@resort.City</span>
+                                    <span class="text-warning fw-bold">
+                                        <i class="fa fa-star me-1"></i>@resort.Rating
+                                    </span>
+                                </div>
+                                <h4 class="card-title fw-bold mb-2">@resort.Name</h4>
+                                <p class="card-text text-muted small mb-3">
+                                    @(resort.Description != null && resort.Description.Length > 90 ? resort.Description.Substring(0, 90) + "..." : resort.Description)
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                                    <div>
+                                        <span class="h5 fw-bold text-success">PKR @resort.PricePerNight</span>
+                                        <small class="text-muted"> / night</small>
+                                    </div>
+                                    <a asp-controller="Resorts" asp-action="Details" asp-route-id="@resort.ResortID" class="btn btn-outline-primary btn-sm">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted fs-5">No resorts available right now.</p>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

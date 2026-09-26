@@ -1,0 +1,76 @@
+﻿@model Karnel_Travel_Guide.Models.TravelInformation
+
+@{
+    ViewData["Title"] = $"{Model.TransportType} from {Model.FromCity} to {Model.ToCity}";
+}
+
+<div class="container pt-5" style="margin-top: 80px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-dark">Travel Facilities</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.TransportType Details</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <!-- Left Column: Description & Route -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="fw-bold mb-0">Journey Overview</h3>
+                    <span class="badge bg-primary px-3 py-2 rounded-pill">@Model.TransportType</span>
+                </div>
+                <p class="text-secondary lh-lg">
+                    @(string.IsNullOrEmpty(Model.Description) ? "No detailed description provided for this transport route." : Model.Description)
+                </p>
+
+                <hr class="my-4 text-muted opacity-25" />
+
+                <h4 class="fw-bold mb-3">Route Map & Path</h4>
+                <div class="p-3 bg-light rounded-3">
+                    <p class="mb-1 text-secondary"><i class="bi bi-signpost-fill text-danger me-2"></i><strong>Specified Route:</strong> @Model.Route</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Summary & Booking Card -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 5rem; z-index: 10;">
+                <h3 class="fw-bold text-dark mb-2">@Model.FromCity <span class="text-muted">&rarr;</span> @Model.ToCity</h3>
+
+                <div class="mb-4">
+                    <span class="fs-3 fw-bold text-success">Rs. @Model.Price.ToString("N2")</span>
+                </div>
+
+                <ul class="list-unstyled text-secondary small mb-4">
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span><i class="bi bi-clock me-2"></i> Departure Time</span>
+                        <strong class="text-dark">@Model.DepartureTime</strong>
+                    </li>
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span><i class="bi bi-clock-fill me-2"></i> Arrival Time</span>
+                        <strong class="text-dark">@Model.ArrivalTime</strong>
+                    </li>
+                    <li class="d-flex justify-content-between py-2 border-bottom">
+                        <span><i class="bi bi-check-circle me-2"></i> Availability Status</span>
+                        <strong class="@(Model.Availability ? "text-success" : "text-danger")">@(Model.Availability ? "Available" : "Fully Booked")</strong>
+                    </li>
+                </ul>
+
+                @if (Model.Availability)
+                {
+                    <a asp-controller="Bookings" asp-action="BookTravel" asp-route-id="@Model.TravelID" class="btn btn-primary btn-lg ">
+                        <i class="bi bi-ticket-perforated me-1"></i> Book Ticket Now
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-secondary w-100 fw-semibold py-3 rounded-pill" disabled>
+                        Currently Unavailable
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

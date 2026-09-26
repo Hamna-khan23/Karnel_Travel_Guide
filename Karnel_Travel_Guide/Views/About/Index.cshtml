@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+<!-- Breadcrumb Header Start -->
+<div class="container-fluid bg-breadcrumb py-5" style="background: linear-gradient(rgba(19, 53, 123, 0.8), rgba(19, 53, 123, 0.8)), url('/images/carousel-2.jpg'); background-position: center center; background-repeat: no-repeat; background-size: cover;">
+    <div class="container text-center py-5" style="max-width: 900px;">
+        <h3 class="text-white display-3 mb-4">About Us</h3>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active text-white">About</li>
+        </ol>
+    </div>
+</div>
+<!-- Breadcrumb Header End -->
+<!-- About Start -->
+<div class="container-fluid about py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="h-100" style="border: 50px solid; border-color: transparent #13357B transparent #13357B;">
+                    <img src="~/images/abouttravel.jpg" class="img-fluid w-100 h-100" alt="About Travela">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <h5 class="section-about-title pe-3">About Us</h5>
+                <h1 class="mb-4">Welcome to <span class="text-primary">Karnel Travel Guide</span></h1>
+                <p class="mb-4">
+                    Karnel Travel Guide is your trusted travel companion. We are committed to providing you with tours to the world's best and most beautiful destinations, an easy booking system, and top-notch facilities to make every journey memorable.
+                </p>
+                <p class="mb-4">
+                    Our goal is to provide travelers with an exceptional tourism experience through superior tour packages, comfortable hotels, and safe transport.
+                </p>
+                <div class="row gy-2 gx-4 mb-4">
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>First-Class Transport</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Handpicked Hotels & Resorts</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>5 Star Tourist Accommodations</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Latest & Custom Tour Packages</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Customer Support</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Best Price Guarantee</p>
+                    </div>
+                </div>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" asp-controller="Information" asp-action="Index">Explore Services</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+<!-- Facilities & Services Start -->
+<div class="container-fluid bg-light service py-5">
+    <div class="container py-5">
+        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+            <h5 class="section-title px-3">Our Facilities</h5>
+            <h1 class="mb-0">What We Provide For You</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded p-4 h-100">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-hotel fa-2x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Accommodation Facility</h5>
+                    <p class="mb-0">Complete booking facilities for comfortable hotels, luxury resorts, and 5-star rooms tailored to your preference at tourist locations.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded p-4 h-100">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-bus fa-2x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Transportation Facility</h5>
+                    <p class="mb-0">Modern transport, pick-and-drop services, and travel guides to ensure a safe and convenient journey.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-item bg-white rounded p-4 h-100">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-globe fa-2x text-primary"></i>
+                    </div>
+                    <h5 class="mb-3">Exclusive Tour Packages</h5>
+                    <p class="mb-0">Affordable and exciting tour packages specially designed for various cities and tourist spots.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Facilities & Services End -->

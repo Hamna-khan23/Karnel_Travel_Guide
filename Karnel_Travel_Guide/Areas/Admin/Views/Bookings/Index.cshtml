@@ -1,0 +1,257 @@
+﻿@model IEnumerable<Karnel_Travel_Guide.Models.Booking>
+
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+<style>
+    /* ==============================
+           BOOKINGS TABLE
+           ============================== */
+    .booking-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .booking-table {
+        width: 100%;
+        min-width: 1400px; /* Width thori barha di taake columns fit aayein */
+        margin-bottom: 0;
+        font-size: 13px;
+        border-collapse: collapse;
+    }
+
+        .booking-table th,
+        .booking-table td {
+            padding: 10px 8px;
+            vertical-align: middle;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .booking-table th {
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+    /* STATUS */
+    .booking-status {
+        font-size: 11px;
+        padding: 6px 9px;
+        white-space: nowrap;
+    }
+
+    /* ACTION BUTTONS */
+    .booking-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        flex-wrap: nowrap;
+    }
+
+        .booking-actions .btn {
+            font-size: 11px;
+            padding: 6px 9px;
+            white-space: nowrap;
+        }
+
+    /* CARD */
+    .booking-card {
+        width: 100%;
+    }
+
+        .booking-card .card-body {
+            padding: 12px;
+        }
+
+    /* SCROLLBAR */
+    .booking-table-wrapper::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .booking-table-wrapper::-webkit-scrollbar-thumb {
+        background: #b8b8b8;
+        border-radius: 10px;
+    }
+
+    .booking-table-wrapper::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+</style>
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <!-- PAGE HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Bookings</h2>
+            <p class="text-muted mb-0">Manage customer bookings</p>
+        </div>
+    </div>
+
+    <!-- BOOKINGS CARD -->
+    <div class="card shadow-sm border-0 booking-card">
+        <div class="card-body">
+            <div class="booking-table-wrapper">
+                <table class="table table-hover align-middle booking-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>User</th>
+                            <th>Package</th>
+                            <th>Hotel</th>
+                            <th>Resort</th>
+                            <th>Tourist Spot</th>  <!-- NAYA COLUMN -->
+                            <th>Restaurant</th>    <!-- NAYA COLUMN -->
+                            <th>Travel</th>
+                            <th>Booking Date</th>
+                            <th>Persons</th>
+                            <th>Status</th>
+                            <th>Total / Price Range</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <!-- Booking ID -->
+                                <td>
+                                    <strong>@item.BookingID</strong>
+                                </td>
+
+                                <!-- User -->
+                                <td>
+                                    @(item.User != null ? item.User.Name : "N/A")
+                                </td>
+
+                                <!-- Package -->
+                                <td>
+                                    @(item.Package != null ? item.Package.Title : "N/A")
+                                </td>
+
+                                <!-- Hotel -->
+                                <td>
+                                    @(item.Hotel != null ? item.Hotel.Name : "N/A")
+                                </td>
+
+                                <!-- Resort -->
+                                <td>
+                                    @(item.Resort != null ? item.Resort.Name : "N/A")
+                                </td>
+
+                                <!-- Tourist Spot -->
+                                <td>
+                                    @if (item.TouristSpot != null)
+                                    {
+                                        <span class="badge bg-info text-dark">@item.TouristSpot.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
+                                    }
+                                </td>
+
+                                <!-- Restaurant -->
+                                <td>
+                                    @if (item.Restaurant != null)
+                                    {
+                                        <span class="badge bg-secondary">@item.Restaurant.Name</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
+                                    }
+                                </td>
+
+                                <!-- Travel -->
+                                <td>
+                                    @(item.TravelInformation != null ? item.TravelInformation.TransportType : "N/A")
+                                </td>
+
+                                <!-- Booking Date -->
+                                <td>
+                                    @item.BookingDate.ToString("dd-MM-yyyy")
+                                </td>
+
+                                <!-- Persons -->
+                                <td>
+                                    @item.Persons
+                                </td>
+
+                                <!-- Status -->
+                                <td>
+                                    @if (item.Status == "Confirmed")
+                                    {
+                                        <span class="badge bg-success booking-status">Confirmed</span>
+                                    }
+                                    else if (item.Status == "Cancelled")
+                                    {
+                                        <span class="badge bg-danger booking-status">Cancelled</span>
+                                    }
+                                    else if (item.Status == "Completed")
+                                    {
+                                        <span class="badge bg-primary booking-status">Completed</span>
+                                    }
+                                    else if (item.Status == "Reserved")
+                                    {
+                                        <span class="badge bg-info text-dark booking-status">Reserved</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark booking-status">@item.Status</span>
+                                    }
+                                </td>
+
+                                <!-- Total / Price Range -->
+                                <td>
+                                    @if (item.RestaurantID.HasValue)
+                                    {
+                                        <span class="text-muted">Range: @(item.PriceRange ?? "N/A")</span>
+                                    }
+                                    else
+                                    {
+                                        <strong>Rs. @item.TotalAmount.ToString("N2")</strong>
+                                    }
+                                </td>
+
+                                <!-- Actions -->
+                                <td>
+                                    <div class="booking-actions">
+                                        <!-- Details -->
+                                        <a asp-area="Admin"
+                                           asp-controller="Bookings"
+                                           asp-action="Details"
+                                           asp-route-bookingid="@item.BookingID"
+                                           class="btn btn-info btn-sm text-white">
+                                            <i class="bi bi-eye"></i> Details
+                                        </a>
+
+                                        <!-- Edit -->
+                                        <a asp-area="Admin"
+                                           asp-controller="Bookings"
+                                           asp-action="Edit"
+                                           asp-route-bookingid="@item.BookingID"
+                                           class="btn btn-warning btn-sm">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+                                        <a asp-area="Admin"
+                                           asp-controller="Bookings"
+                                           asp-action="Delete"
+                                           asp-route-bookingid="@item.BookingID"
+                                           class="btn btn-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

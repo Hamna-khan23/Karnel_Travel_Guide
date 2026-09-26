@@ -1,0 +1,218 @@
+﻿@model Karnel_Travel_Guide.Models.Feedback
+
+@{
+    ViewData["Title"] = "Feedback Details";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+
+    <!-- ================= PAGE HEADER ================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                Feedback Details
+            </h2>
+
+            <p class="text-muted mb-0">
+                View complete customer feedback information
+            </p>
+        </div>
+
+        <div>
+
+            <a asp-area="Admin"
+               asp-controller="Feedbacks"
+               asp-action="Index"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back to Feedback
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FEEDBACK DETAILS CARD ================= -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="mb-0 fw-bold">
+                Feedback Information
+            </h5>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <!-- ================= FEEDBACK ID ================= -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-bold">
+                        Feedback ID
+                    </label>
+
+                    <div class="form-control bg-light">
+                        @Model.FeedbackID
+                    </div>
+
+                </div>
+
+
+                <!-- ================= USER ================= -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-bold">
+                        User
+                    </label>
+
+                    <div class="form-control bg-light">
+
+                        @if (Model.User != null)
+                        {
+                            @Model.User.Name
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                User not found
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= EMAIL ================= -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-bold">
+                        Email
+                    </label>
+
+                    <div class="form-control bg-light">
+
+                        @if (Model.User != null)
+                        {
+                            @Model.User.Email
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                N/A
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= RATING ================= -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-bold">
+                        Rating
+                    </label>
+
+                    <div class="form-control bg-light">
+
+                        <span class="badge bg-warning text-dark">
+                            @Model.Rating / 5
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= DATE ================= -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-bold">
+                        Date
+                    </label>
+
+                    <div class="form-control bg-light">
+                        @Model.Date.ToString("dd-MM-yyyy")
+                    </div>
+
+                </div>
+
+
+                <!-- ================= COMMENTS ================= -->
+
+                <div class="col-12">
+
+                    <label class="form-label fw-bold">
+                        Comments
+                    </label>
+
+                    <div class="form-control bg-light"
+                         style="min-height: 120px;">
+
+                        @if (!string.IsNullOrEmpty(Model.Comments))
+                        {
+                            @Model.Comments
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                No comments provided.
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= CARD FOOTER ================= -->
+
+        <div class="card-footer bg-white">
+
+            <a asp-area="Admin"
+               asp-controller="Feedbacks"
+               asp-action="Delete"
+               asp-route-feedbackid="@Model.FeedbackID"
+               class="btn btn-danger">
+
+                <i class="bi bi-trash"></i>
+                Delete Feedback
+
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Feedbacks"
+               asp-action="Index"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

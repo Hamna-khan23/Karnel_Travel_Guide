@@ -1,0 +1,86 @@
+@model Karnel_Travel_Guide.Models.Hotel
+
+@{
+    ViewData["Title"] = "Delete Hotel";
+}
+
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">Delete Hotel</h2>
+        <p class="text-muted mb-0">Confirm deletion of this hotel</p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                <strong>Are you sure?</strong> This action cannot be undone.
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-12 mb-2">
+                     <strong>Hotel Images</strong>
+                    <div class="mt-2 d-flex flex-wrap gap-2">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            var images = Model.ImageUrl.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var img in images)
+                            {
+                                <img src="@Url.Content(img.Trim())" alt="@Model.Name" class="shadow-sm border rounded" style="max-height: 120px; width: 120px; object-fit: cover;" />
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">No Image Available</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Hotel Name</strong>
+                    <div class="mt-1">@Model.Name</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>City</strong>
+                    <div class="mt-1">@Model.City</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Price Per Night</strong>
+                    <div class="mt-1">@Model.PricePerNight.ToString("N2")</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Rating</strong>
+                    <div class="mt-1">@Model.Rating</div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Total Rooms</strong>
+                    <div class="mt-1">@Model.TotalRooms</div>
+                </div>
+            </div>
+
+            <form asp-area="Admin"
+                  asp-controller="Hotels"
+                  asp-action="Delete"
+                  asp-route-hotelid="@Model.HotelID"
+                  method="post">
+
+                <input type="hidden" asp-for="HotelID" />
+
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Delete Hotel
+                </button>
+
+                <a asp-area="Admin"
+                   asp-controller="Hotels"
+                   asp-action="Index"
+                   class="btn btn-secondary ms-2">
+                    <i class="bi bi-arrow-left me-1"></i> Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

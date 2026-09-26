@@ -1,0 +1,70 @@
+﻿@model Karnel_Travel_Guide.Models.Booking
+
+@{
+    ViewData["Title"] = "Book Accommodation";
+    string itemName = ViewBag.ItemName ?? "Hotel / Resort";
+    decimal pricePerNight = ViewBag.PricePerNight ?? 0;
+    string accommodationType = Model.HotelID.HasValue ? "Hotel" : "Resort";
+}
+
+<div class="container py-5" style="margin-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <div class="text-center mb-4">
+                    <span class="badge bg-primary px-3 py-2 rounded-pill mb-2">@accommodationType Booking</span>
+                    <h2 class="fw-bold" style="color: #113264;">@itemName</h2>
+                    <p class="text-muted">Per Night Rate: <strong class="text-dark">Rs. @pricePerNight.ToString("N0")</strong></p>
+                </div>
+
+                <form asp-action="BookAccommodation" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="All" class="text-danger mb-3 fw-semibold"></div>
+
+                    <!-- Hidden IDs for Hotel or Resort -->
+                    <input type="hidden" asp-for="HotelID" />
+                    <input type="hidden" asp-for="ResortID" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Number of Persons</label>
+                            <input asp-for="Persons" type="number" min="1" max="100" class="form-control" required />
+                            <small class="text-muted">For reference only; pricing is calculated per night.</small>
+                            <span asp-validation-for="Persons" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Special Requests (Optional)</label>
+                            <input asp-for="SpecialRequest" class="form-control" placeholder="Any special requirements..." />
+                            <span asp-validation-for="SpecialRequest" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Check-In Date</label>
+                            <input asp-for="CheckInDate" type="date" class="form-control" required />
+                            <span asp-validation-for="CheckInDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Check-Out Date</label>
+                            <input asp-for="CheckOutDate" type="date" class="form-control" required />
+                            <span asp-validation-for="CheckOutDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn text-white w-100 rounded-pill py-3 fw-bold shadow-sm" style="background-color: #113264;">
+                                Confirm & Book Now (Rs. @pricePerNight.ToString("N0") / Night)
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

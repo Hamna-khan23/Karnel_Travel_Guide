@@ -1,0 +1,282 @@
+@model Karnel_Travel_Guide.Models.TravelInformation
+
+@{
+    ViewData["Title"] = "Edit Travel Information";
+}
+
+<div class="container-fluid px-4 px-lg-5 py-4">
+
+    <!-- Page Header -->
+
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Edit Travel Information
+            </h2>
+
+            <p class="text-muted mb-0">
+                Update travel information
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to List
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Form Card -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white py-3">
+
+            <h5 class="fw-bold mb-0">
+                Travel Information Details
+            </h5>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <form asp-action="Edit"
+                  asp-route-id="@Model.TravelID"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+
+                <input type="hidden"
+                       asp-for="TravelID" />
+
+
+                <div class="row g-4">
+
+
+                    <!-- Transport Type -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="TransportType"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="TransportType"
+                               class="form-control" />
+
+                        <span asp-validation-for="TransportType"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- From City -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="FromCity"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="FromCity"
+                               class="form-control" />
+
+                        <span asp-validation-for="FromCity"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- To City -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="ToCity"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="ToCity"
+                               class="form-control" />
+
+                        <span asp-validation-for="ToCity"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Route -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="Route"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Route"
+                               class="form-control" />
+
+                        <span asp-validation-for="Route"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Price -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="Price"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="Price"
+                               class="form-control" />
+
+                        <span asp-validation-for="Price"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Departure Time -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="DepartureTime"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="DepartureTime"
+                               class="form-control" />
+
+                        <span asp-validation-for="DepartureTime"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Arrival Time -->
+
+                    <div class="col-12 col-md-6">
+
+                        <label asp-for="ArrivalTime"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <input asp-for="ArrivalTime"
+                               class="form-control" />
+
+                        <span asp-validation-for="ArrivalTime"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- Availability -->
+
+                    <div class="col-12">
+
+                        <div class="form-check">
+
+                            <input asp-for="Availability"
+                                   class="form-check-input" />
+
+                            <label asp-for="Availability"
+                                   class="form-check-label fw-semibold">
+                            </label>
+
+                        </div>
+
+                        <span asp-validation-for="Availability"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Description -->
+
+                    <div class="col-12">
+
+                        <label asp-for="Description"
+                               class="form-label fw-semibold">
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="4"></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="d-flex flex-wrap gap-2 mt-4">
+
+                    <button type="submit"
+                            class="btn btn-success">
+
+                        <i class="bi bi-check-lg me-1"></i>
+                        Save Changes
+
+                    </button>
+
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Back to List
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

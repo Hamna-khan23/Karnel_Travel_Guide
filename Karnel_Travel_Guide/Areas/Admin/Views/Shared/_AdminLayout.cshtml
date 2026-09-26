@@ -1,0 +1,649 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Karnel Travel Guide Admin Dashboard">
+
+    <title>
+        @ViewData["Title"] - Karnel Travel Guide Admin
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="/Admin/assets/css/bootstrap.min.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="/Admin/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet"
+          href="/Admin/assets/css/style.css">
+
+    <style>
+
+            /* ==========================================
+                       BASIC RESET
+                    ========================================== */
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                min-height: 100%;
+            }
+
+            body {
+                overflow-x: hidden;
+            }
+
+            /* ==========================================
+                       ADMIN SHELL
+                    ========================================== */
+
+            .admin-shell {
+                min-height: 100vh;
+                width: 100%;
+            }
+
+            /* ==========================================
+                       SIDEBAR
+                    ========================================== */
+
+            .admin-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 280px;
+                z-index: 1040;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            /* ==========================================
+                       MAIN AREA
+                    ========================================== */
+
+            .admin-main {
+                min-height: 100vh;
+                margin-left: 280px;
+                width: calc(100% - 280px);
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* ==========================================
+                       NAVBAR
+                    ========================================== */
+
+            .admin-navbar {
+                width: 100%;
+                min-height: 72px;
+                flex-shrink: 0;
+            }
+
+            /* ==========================================
+                       PAGE CONTENT
+                    ========================================== */
+
+            .admin-content {
+                width: 100%;
+                flex: 1;
+                min-width: 0;
+                padding: 0;
+                margin: 0;
+            }
+
+                /* Remove unwanted top spacing */
+
+                .admin-content > * {
+                    margin-top: 0;
+                }
+
+            .dashboard-content {
+                width: 100%;
+                margin: 0 !important;
+                padding-top: 0 !important;
+            }
+
+                .dashboard-content > .container-fluid {
+                    margin-top: 0 !important;
+                }
+
+            /* ==========================================
+                       FOOTER
+                    ========================================== */
+
+            .admin-footer {
+                width: 100%;
+                margin: 0;
+                padding: 18px 0;
+                flex-shrink: 0;
+            }
+
+                .admin-footer .container-fluid {
+                    min-height: auto;
+                }
+
+            /* ==========================================
+                       NAVBAR ACTIONS
+                    ========================================== */
+
+            .navbar-actions {
+                margin-left: auto;
+            }
+
+            /* ==========================================
+                       MOBILE
+                    ========================================== */
+
+            @@media (max-width: 991.98px) {
+
+                .admin-sidebar {
+                    width: 280px;
+                    transform: translateX(-100%);
+                }
+
+                .admin-main {
+                    width: 100%;
+                    margin-left: 0;
+                }
+
+                body.sidebar-open .admin-sidebar {
+                    transform: translateX(0);
+                }
+            }
+
+            /* ==========================================
+                       SMALL SCREEN
+                    ========================================== */
+
+            @@media (max-width: 575.98px) {
+
+                .admin-navbar {
+                    min-height: 64px;
+                }
+
+                .admin-footer {
+                    padding: 14px 0;
+                }
+            }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="admin-shell">
+
+
+        <!-- ================================================= -->
+        <!-- SIDEBAR BACKDROP -->
+        <!-- ================================================= -->
+
+        <div class="sidebar-backdrop"
+             data-sidebar-close>
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SIDEBAR -->
+        <!-- ================================================= -->
+
+        <aside class="admin-sidebar"
+               id="adminSidebar"
+               aria-label="Main navigation">
+
+
+            <!-- ================================================= -->
+            <!-- LOGO -->
+            <!-- ================================================= -->
+
+            <div class="sidebar-header">
+
+                
+
+
+                    <span class="brand-copy">
+
+                        <span class="brand-title">
+                        <i class="bi bi-grid-1x2-fill"
+                           aria-hidden="true">
+                        </i>
+                            Karnel_Travels_Dashboard
+                        </span>
+
+                        @* <span class="brand-subtitle"> *@
+                        @*     Admin Template
+
+                        </span> *@
+
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SIDEBAR NAVIGATION -->
+            <!-- ================================================= -->
+
+            <nav class="sidebar-nav">
+
+
+                <!-- DASHBOARD -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Dashboard"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-speedometer2"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- USERS -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Users"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-people"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Users
+                    </span>
+
+                </a>
+
+
+                <!-- HOTELS -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Hotels" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Hotels"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-building"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Hotels
+                    </span>
+
+                </a>
+
+
+                <!-- TOURIST SPOTS -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "TouristSpots" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="TouristSpots"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Tourist Spots
+                    </span>
+
+                </a>
+
+
+                <!-- RESORTS -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Resorts" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Resorts"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-house-heart"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Resorts
+                    </span>
+
+                </a>
+
+
+                <!-- RESTAURANTS -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Restaurants" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Restaurants"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-shop"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Restaurants
+                    </span>
+
+                </a>
+
+
+                <!-- TRAVEL INFORMATION -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "TravelInformations" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="TravelInformations"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-bus-front"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Travel Information
+                    </span>
+
+                </a>
+
+
+
+                <!-- BOOKINGS -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Bookings" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Bookings"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Bookings
+                    </span>
+
+                </a>
+
+
+                <!-- PACKAGES -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Packages" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Packages"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-box"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Packages
+                    </span>
+
+                </a>
+
+
+                <!-- CONTACT MESSAGES -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "ContactMessages" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="ContactMessages"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Contact Messages
+                    </span>
+
+                </a>
+
+
+                <!-- FEEDBACK -->
+
+                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Feedbacks" ? "active" : "")"
+                   asp-area="Admin"
+                   asp-controller="Feedbacks"
+                   asp-action="Index">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-chat-square-text"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Feedback
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+
+            <!-- ================================================= -->
+            <!-- SIDEBAR USER -->
+            <!-- ================================================= -->
+
+            <div class="sidebar-user">
+
+                <strong>
+                    Admin Panel
+                </strong>
+
+                <small>
+                    Active Workspace
+                </small>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- SIDEBAR FOOTER -->
+            <!-- ================================================= -->
+
+            <div class="sidebar-footer">
+
+                <span class="status-dot"></span>
+
+                <span class="sidebar-footer-text">
+                    System running smoothly
+                </span>
+
+            </div>
+
+
+        </aside>
+
+
+        <!-- ================================================= -->
+        <!-- MAIN AREA -->
+        <!-- ================================================= -->
+
+        <div class="admin-main">
+
+
+            <!-- ================================================= -->
+            <!-- TOP NAVBAR -->
+            <!-- ================================================= -->
+
+            <nav class="navbar admin-navbar navbar-expand bg-white">
+
+                <div class="container-fluid px-3 px-lg-4">
+
+
+                    <!-- SIDEBAR TOGGLE -->
+
+                    <button class="sidebar-toggle"
+                            type="button"
+                            data-sidebar-toggle
+                            aria-controls="adminSidebar"
+                            aria-expanded="true"
+                            aria-label="Toggle sidebar">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </button>
+
+
+                    <!-- RIGHT SIDE -->
+
+                    <div class="navbar-actions">
+
+
+                        <!-- ================================================= -->
+                        <!-- THEME BUTTON -->
+                        <!-- ================================================= -->
+
+                        <button class="icon-button theme-toggle"
+                                type="button"
+                                data-theme-toggle
+                                aria-label="Switch color theme"
+                                title="Switch color theme">
+
+                            <i class="bi bi-moon-stars"
+                               data-theme-icon
+                               aria-hidden="true">
+                            </i>
+
+                        </button>
+
+
+                        <!-- ================================================= -->
+                        <!-- ADMIN DROPDOWN -->
+                        <!-- ================================================= -->
+
+                        <div class="dropdown">
+
+
+                            <button class="profile-button dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+
+
+                                <span class="profile-name">
+
+                                    Admin
+
+                                </span>
+
+
+                            </button>
+
+
+                            <ul class="dropdown-menu dropdown-menu-end">
+
+
+                                <li>
+<a asp-area=""
+   asp-controller="Accounts"
+   asp-action="Logout"
+   class="dropdown-item">
+    <i class="bi bi-box-arrow-right me-2"></i>
+    Logout
+</a>
+
+                                </li>
+
+
+                            </ul>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </nav>
+
+
+            <!-- ================================================= -->
+            <!-- PAGE CONTENT -->
+            <!-- ================================================= -->
+
+            <main class="admin-content">
+
+                @RenderBody()
+
+            </main>
+
+
+            <!-- ================================================= -->
+            <!-- FOOTER -->
+            <!-- ================================================= -->
+
+            <footer class="admin-footer">
+
+                <div class="container-fluid px-3 px-lg-4">
+
+                    <span>
+                        Copyright 2026 Karnel Travel Guide.
+                    </span>
+
+                    <span>
+                        Admin Panel
+                    </span>
+
+                </div>
+
+            </footer>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- BOOTSTRAP JS -->
+    <!-- ================================================= -->
+
+    <script src="/Admin/assets/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- ================================================= -->
+    <!-- ADMIN JS -->
+    <!-- ================================================= -->
+
+    <script src="/Admin/assets/js/main.js"></script>
+
+
+    <!-- ================================================= -->
+    <!-- PAGE SCRIPTS -->
+    <!-- ================================================= -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+
+</html>
